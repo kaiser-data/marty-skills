@@ -234,10 +234,14 @@ def validate_skill(skill_dir):
     body_words = len(body.split())
     report["lines"] = body_lines
     report["words"] = body_words
-    if body_lines > MAX_BODY_LINES:
-        warnings.append(f"body is {body_lines} lines (aim <{MAX_BODY_LINES}) — move detail to references/")
+    # words track context cost better than lines (code blocks inflate lines);
+    # only warn when the token-relevant measure is over
     if body_words > MAX_BODY_WORDS:
         warnings.append(f"body is {body_words} words (aim <{MAX_BODY_WORDS}) — move detail to references/")
+    elif body_lines > MAX_BODY_LINES:
+        report.setdefault("notes", []).append(
+            f"body is {body_lines} lines but only {body_words} words — fine, code blocks inflate lines"
+        )
 
     for marker in ("TODO:", "FIXME:", "[TODO", "[PLACEHOLDER]"):
         if marker in body:
