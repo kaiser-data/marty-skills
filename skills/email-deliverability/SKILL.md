@@ -27,7 +27,7 @@ Work in this order — most reports are NOT delivery failures:
 - Working `{{ UNSUBSCRIBE }}` link and a "why you're receiving this" consent line in the footer — legally required and a strong spam-score factor.
 - HTML under ~90 KB: Gmail clips at ~102 KB and the clipped view hides the footer — unsubscribe link AND tracking pixel gone (spam complaints rise, opens under-report).
 - Real test sends to at least Outlook, Gmail, and one mobile client; review in the actual inbox, not a screenshot. Expect 2–3 iterations.
-- **Preflight with mail-tester.com** (free, ~3 tests/day): send the campaign to its generated address and fix anything below ~9/10 — it scores SPF/DKIM/DMARC, spam triggers, HTML weight, and broken links in one shot. More render/spam tools for the user: "Testing tools" in the `html-email` skill's `references/client-quirks.md`.
+- **Preflight with mail-tester.com** (free, ~3 tests/day): send the campaign to its generated address and fix anything below ~9/10 — it scores SPF/DKIM/DMARC, spam triggers, HTML weight, and broken links in one shot. More render/spam tools for the user: the "Testing tools" section of the html-email skill's client-quirks reference.
 - Send from a domain-aligned address (SPF/DKIM/DMARC configured for the sending platform — most ESPs have a domain-authentication wizard; mail-tester verifies the result).
 - Few distinct link domains; one repeated primary CTA URL is fine.
 - Segment per language/list so recipients get the variant they signed up for — irrelevant content drives spam complaints.
