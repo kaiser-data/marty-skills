@@ -1,0 +1,201 @@
+<!-- ============================================================
+  HYBRID ("SPONGY") EMAIL SKELETON — fluid without media queries.
+  STATUS: NOT yet proven in real sends (unlike skeleton.html).
+  A/B it against skeleton.html in real test sends before trusting.
+
+  Why it exists: Gmail apps IGNORE media queries for non-Google
+  accounts (a Yahoo/work mailbox read in the Gmail app). This
+  pattern (Cerberus "hybrid") reflows via display:inline-block +
+  max-width instead, so mobile layout works with NO media queries;
+  the media-query block is enhancement only.
+  Same brand-example colors as skeleton.html.
+============================================================= -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="x-apple-disable-message-reformatting" />
+  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no" />
+  <!-- Hint only (~5% client support) — the real dark-mode defense is
+       color choice: see client-quirks.md "Dark mode" -->
+  <meta name="color-scheme" content="light only" />
+  <meta name="supported-color-schemes" content="light only" />
+  <title>SUBJECT / TITLE</title>
+
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:AllowPNG/>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+
+  <!--[if mso]>
+  <style type="text/css">
+    body, table, td, p, a, span, div { font-family: Arial, Helvetica, sans-serif !important; }
+  </style>
+  <![endif]-->
+
+  <style type="text/css">
+    /* Reset only — LAYOUT NEEDS NO MEDIA QUERIES in this skeleton.
+       The media query below is pure enhancement (typography polish). */
+    html, body { margin: 0 !important; padding: 0 !important; height: 100% !important; width: 100% !important; }
+    * { -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important; border-collapse: collapse !important; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    a { text-decoration: none; }
+    a[x-apple-data-detectors], .unstyle-auto-detected-links a { color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important; }
+    u + #body a { color: inherit; text-decoration: none; }
+    /* Stop Gmail's download-overlay icon on wide images */
+    img.g-img + div { display: none !important; }
+
+    @media only screen and (max-width: 620px) {
+      /* enhancement only — layout survives without this block */
+      .h1 { font-size: 26px !important; line-height: 32px !important; }
+    }
+  </style>
+</head>
+
+<body id="body" lang="de" style="margin:0; padding:0; width:100%; background-color:#eef1f3; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;">
+
+  <div style="display:none; font-size:1px; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden; mso-hide:all; font-family:Arial,sans-serif; color:#eef1f3;">
+    PREHEADER TEXT — one enticing sentence, ~90 chars.
+    &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+  </div>
+
+  <!-- Outer wrapper: full-width bg -->
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#eef1f3;">
+    <tr>
+      <td align="center" style="padding:24px 12px;">
+
+        <!--[if mso]>
+        <table role="presentation" align="center" cellspacing="0" cellpadding="0" border="0" width="600"><tr><td>
+        <![endif]-->
+
+        <!-- HYBRID CONTAINER: fluid width, capped at 600px. No class needed —
+             narrow screens get width:100% automatically, no media query. -->
+        <div style="max-width:600px; margin:0 auto;">
+        <table role="presentation" align="center" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:600px; background-color:#ffffff;">
+
+          <!-- ===== HEADER BAR (same dir=rtl flush-right trick as skeleton.html) ===== -->
+          <tr>
+            <td bgcolor="#0d4a70" style="background-color:#0d4a70; border-bottom:4px solid #f2df74; padding:10px 22px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" dir="rtl">
+                <tr>
+                  <td dir="ltr" align="right" valign="middle" style="text-align:right;">
+                    <img class="g-img" src="https://YOURDOMAIN/badge.png?v=1" width="72" height="72" alt="EVENT / BRAND NAME" style="display:inline-block; width:72px; max-width:72px; height:auto; border:0; outline:none; -ms-interpolation-mode:bicubic;" />
+                  </td>
+                  <td dir="ltr" width="18" style="width:18px; font-size:0; line-height:0;">&nbsp;</td>
+                  <td dir="ltr" align="left" valign="middle" width="100%" style="width:100%; text-align:left;">
+                    <!-- Non-VML bulletproof button (goodemailcode.com technique):
+                         ONE anchor for all clients. [if mso] <i> elements fake the
+                         padding in classic Outlook via mso-font-width/mso-text-raise. -->
+                    <a href="https://CTA-URL" style="background-color:#1f8fc4; border:2px solid #bfe2f3; border-radius:8px; color:#ffffff; display:inline-block; font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:bold; line-height:17px; text-align:center; text-decoration:none; padding:9px 18px; mso-padding-alt:0; white-space:nowrap;">
+                      <!--[if mso]><i style="mso-font-width:150%;mso-text-raise:100%" hidden>&emsp;</i><![endif]-->
+                      <span style="mso-text-raise:50%;">CTA LABEL &rsaquo;</span>
+                      <!--[if mso]><i style="mso-font-width:150%" hidden>&emsp;</i><![endif]-->
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ===== HEADLINE: real heading element (accessibility / EAA) ===== -->
+          <tr>
+            <td style="padding:34px 24px 0 24px;">
+              <h1 class="h1" style="margin:0 0 18px 0; font-family:Arial,Helvetica,sans-serif; font-size:28px; line-height:34px; color:#0d4a70;">HEADLINE</h1>
+            </td>
+          </tr>
+
+          <!-- ===== BODY COPY ===== -->
+          <tr>
+            <td style="padding:0 24px 22px 24px; font-family:Arial,Helvetica,sans-serif; font-size:16px; line-height:24px; color:#2b2b2b;">
+              <p style="margin:0 0 18px 0;">Liebe(r) {{ FIRSTNAME }} {{ LASTNAME }},</p>
+              <p style="margin:0 0 18px 0;">BODY PARAGRAPH — non-ASCII as entities: &uuml; &auml; &szlig; &ndash; &euro;.</p>
+              <p style="margin:0;">Inline links: <a href="https://CTA-URL" style="color:#0d4a70; font-weight:bold; text-decoration:underline;">LINK TEXT</a>.</p>
+            </td>
+          </tr>
+
+          <!-- ===== HYBRID TWO-COLUMN ROW: the pattern this skeleton exists for.
+               Columns are inline-block "sponges": side-by-side at 600px,
+               stacking automatically when the viewport is narrower —
+               NO media query involved. Ghost table pins Outlook to 2 cols.
+               NOTE: keep NO whitespace between </div> and <div> — inline-block
+               renders inter-element whitespace as a gap that breaks the math. ===== -->
+          <tr>
+            <td style="padding:0 24px 22px 24px; font-size:0; text-align:center;">
+              <!--[if mso]>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td width="50%" valign="top">
+              <![endif]-->
+              <div style="display:inline-block; width:100%; max-width:270px; vertical-align:top;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td style="padding:10px; font-family:Arial,Helvetica,sans-serif; font-size:15px; line-height:22px; color:#2b2b2b; text-align:left;">
+                      <p style="margin:0; font-weight:bold; color:#0d4a70;">COLUMN 1 TITLE</p>
+                      <p style="margin:6px 0 0 0;">COLUMN 1 TEXT.</p>
+                    </td>
+                  </tr>
+                </table>
+              </div><!--[if mso]></td><td width="50%" valign="top"><![endif]--><div style="display:inline-block; width:100%; max-width:270px; vertical-align:top;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td style="padding:10px; font-family:Arial,Helvetica,sans-serif; font-size:15px; line-height:22px; color:#2b2b2b; text-align:left;">
+                      <p style="margin:0; font-weight:bold; color:#0d4a70;">COLUMN 2 TITLE</p>
+                      <p style="margin:6px 0 0 0;">COLUMN 2 TEXT.</p>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <!--[if mso]>
+              </td></tr></table>
+              <![endif]-->
+            </td>
+          </tr>
+
+          <!-- ===== BIG CTA (non-VML variant; centers itself, hugs label) ===== -->
+          <tr>
+            <td align="center" style="padding:0 24px 26px 24px;">
+              <a href="https://CTA-URL" style="background-color:#0d4a70; border:1px solid #0a3a59; border-radius:6px; color:#ffffff; display:inline-block; font-family:Arial,Helvetica,sans-serif; font-size:16px; font-weight:bold; line-height:21px; text-align:center; text-decoration:none; padding:14px 28px; mso-padding-alt:0;">
+                <!--[if mso]><i style="mso-font-width:300%;mso-text-raise:150%" hidden>&emsp;</i><![endif]-->
+                <span style="mso-text-raise:75%;">BIG CTA LABEL</span>
+                <!--[if mso]><i style="mso-font-width:300%" hidden>&emsp;</i><![endif]-->
+              </a>
+            </td>
+          </tr>
+
+          <!-- ===== FOOTER (Impressum + unsubscribe — MANDATORY) ===== -->
+          <tr>
+            <td bgcolor="#0d4a70" style="background-color:#0d4a70; padding:24px; font-family:Arial,Helvetica,sans-serif; font-size:12px; line-height:18px; color:#c4d3df;">
+              <p style="margin:0 0 8px 0; color:#ffffff; font-weight:bold;">BRAND / EVENT NAME</p>
+              <p style="margin:0 0 12px 0;">
+                RESPONSIBLE PERSON, ADDRESS, PHONE<br />
+                Kontakt: <a href="mailto:CONTACT@DOMAIN" style="color:#f2df74; text-decoration:underline;">CONTACT@DOMAIN</a>
+              </p>
+              <p style="margin:0;">
+                WHY-YOU-GOT-THIS LINE (consent basis).<br />
+                <a href="{{ UNSUBSCRIBE }}" style="color:#f2df74; text-decoration:underline;">Abmelden</a>
+                &nbsp;&middot;&nbsp;
+                <a href="https://YOURDOMAIN" style="color:#f2df74; text-decoration:underline;">YOURDOMAIN</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+        </div>
+
+        <!--[if mso]>
+        </td></tr></table>
+        <![endif]-->
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
