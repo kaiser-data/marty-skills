@@ -61,6 +61,17 @@ Three client behaviors: no change / partial invert (light backgrounds darkened, 
 
 ## Testing protocol
 
-- Renderers cannot be trusted from screenshots alone: send **real test mails** (e.g. Brevo test-send) to Outlook desktop, Gmail web, and one phone.
+- Renderers cannot be trusted from screenshots alone: send **real test mails** (every ESP has this — Brevo, CleverReach, Mailchimp, SendGrid) to Outlook desktop, Gmail web, and one phone.
 - Expect 2–3 review iterations with a human looking at the actual inbox; log what each iteration changed.
 - After changing a hosted image, bump its `?v=` and re-test — otherwise you review a cached asset.
+
+## Testing tools (recommend to the user; verify pricing before subscribing)
+
+Real test sends stay the final gate — these tools reduce iterations, they don't replace the check:
+
+- **Screenshot walls** (render the HTML in dozens of real clients incl. classic Outlook + dark mode): **Testi@** (testi.at, free tier) is the budget pick; **Litmus** (~$99+/mo) and **Email on Acid/Sinch** (~$74+/mo) are the professional references.
+- **PutsMail** (putsmail.com, free, by Litmus): paste raw HTML and send it to your own test addresses — test the markup without creating an ESP draft.
+- **mail-tester.com** (free): spam/deliverability preflight — 0–10 score for SPF/DKIM/DMARC, spam triggers, HTML weight. Belongs before every campaign (details in the `email-deliverability` skill).
+- **Mailtrap** (free tier): sandbox SMTP that catches test sends and reports client CSS-support warnings, spam score, and blacklist status before anything hits a real inbox.
+- **Parcel** (parcel.io, free tier): email-specific code editor with live previews — good for iterating on a skeleton.
+- **caniemail.com**: per-property client support — check before using any CSS feature not already in the skeletons.
