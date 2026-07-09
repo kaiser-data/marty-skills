@@ -19,9 +19,11 @@ Produce campaign-grade HTML email that survives the hostile rendering landscape:
 
 ## Workflow
 
-1. Start from `references/skeleton.html` — proven head block, preheader, ghost tables, header, button, footer. Do not hand-roll the head.
+1. Pick a skeleton — never hand-roll the head block:
+   - `references/skeleton.html` — the **battle-tested default** (fixed 600px + media queries, VML buttons). Proven in real sends.
+   - `references/skeleton-hybrid.html` — fluid "spongy" variant that reflows **without media queries** (covers Gmail-app users on non-Google accounts, where media queries never fire). **Not yet proven in real sends** — A/B against the default in test sends before using for a live campaign.
 2. Write copy into the body sections; keep paragraph styling on each `<p>` (`margin:0 0 18px 0`, font stack, size, line-height on the containing `<td>`).
-3. Build every button with the **VML + anchor pair** (see skeleton): `<!--[if mso]>` `v:roundrect` for Outlook, `<!--[if !mso]><!-- -->` padded `<a>` with `mso-hide:all` for everyone else. Both variants must carry the same label and href.
+3. Buttons: two bulletproof options (details + trade-offs in `references/client-quirks.md`). The proven default is the **VML + anchor pair** (`v:roundrect` for classic Outlook, `mso-hide:all` anchor for the rest — both variants same label and href). The modern alternative is a **single anchor with MSO padding fake** (`mso-padding-alt` + `[if mso]` `<i>`/`mso-font-width`/`mso-text-raise`) — one node, screen-reader friendly. Never `role="button"` on a link.
 4. Add the hidden **preheader** div as the first body element — the inbox preview line. Pad it with `&nbsp;&zwnj;` repeats so body text doesn't leak into the preview.
 5. Check the mobile media query (`max-width:620px`): container 100%, side padding tightens to 22px, headline shrinks, CTAs become `display:inline-block; width:auto; line-height:21px; padding:12px 20px` — buttons **hug their label, centered**, not full-width; a wrapped 2-line label needs the tight 21px line-height instead of the desktop 50px row. Layout must survive a 320px screen.
 6. Footer is mandatory: sender identity/Impressum, why-you-got-this line, `{{ UNSUBSCRIBE }}` link. Missing unsubscribe = spam folder + legal problem.
@@ -34,15 +36,24 @@ Produce campaign-grade HTML email that survives the hostile rendering landscape:
 - **Horizontal rule**: a 1px `<td>` with `bgcolor`, `height:1px;line-height:1px;font-size:1px;` containing `&nbsp;` — never `<hr>`.
 - **Boxed callout**: nested table with `bgcolor`, 1px border, `border-radius` (progressive enhancement — Outlook shows square corners, acceptable).
 
-## Spam-safe markup
+## Accessibility (legally required in the EU since June 2025 — EAA)
+
+- Real heading elements (`<h1>`–`<h3>`) for headings, not styled `<p>` — screen readers navigate by them.
+- `lang` attribute on `<html>` AND `<body>`.
+- `role="presentation"` on every layout table (already in the skeletons); meaningful `alt` on every image.
+- Text contrast ≥ 4.5:1 — including after dark-mode inversion (see client-quirks.md).
+
+## Spam-safe markup & size
 
 - Keep image-to-text ratio sane; the mail must make sense with all images blocked (alt text + solid color bands).
 - One clear primary CTA URL repeated is fine; many different link domains is a spam signal.
-- `<meta name="color-scheme" content="light only">` + `supported-color-schemes` prevents dark-mode clients from inverting brand colors unpredictably. Only allow dark-mode adaptation deliberately.
+- **Stay under ~90 KB of HTML** (Gmail clips at ~102 KB, HTML bytes only) — clipping hides the unsubscribe link and the tracking pixel. Strip unused CSS/classes before send.
+- Dark mode: the `color-scheme: light only` meta pair is a hint honored by few clients, NOT a guarantee — the real defense is color choice (no pure #000/#fff, transparent-PNG logos). Full strategy in `references/client-quirks.md`.
 
 This skill covers only the markup. Delivery diagnosis (spam folder, bounces, sender reputation, campaign checks) is the companion `email-deliverability` skill.
 
 ## References
 
 - `references/skeleton.html` — the full proven boilerplate to copy as starting point (head, preheader, header bar, VML buttons, callout box, footer).
-- `references/client-quirks.md` — per-client gotchas (Outlook/Word engine, Gmail clipping, Apple data detectors) and the reset-CSS rationale, line by line.
+- `references/skeleton-hybrid.html` — fluid no-media-query variant (hybrid columns, single-anchor buttons, real headings). Untested in live sends — verify before campaign use.
+- `references/client-quirks.md` — per-client gotchas (classic vs new Outlook, Gmail clipping + non-Google-account limits, Apple data detectors, dark-mode strategy, button techniques), line by line.

@@ -25,6 +25,7 @@ Work in this order — most reports are NOT delivery failures:
 ## Pre-send checklist
 
 - Working `{{ UNSUBSCRIBE }}` link and a "why you're receiving this" consent line in the footer — legally required and a strong spam-score factor.
+- HTML under ~90 KB: Gmail clips at ~102 KB and the clipped view hides the footer — unsubscribe link AND tracking pixel gone (spam complaints rise, opens under-report).
 - Real test sends to at least Outlook, Gmail, and one mobile client; review in the actual inbox, not a screenshot. Expect 2–3 iterations.
 - Send from a domain-aligned address (SPF/DKIM/DMARC configured for the sending platform).
 - Few distinct link domains; one repeated primary CTA URL is fine.
