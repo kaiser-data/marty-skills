@@ -55,27 +55,28 @@ PACKAGE_EXCLUDES = {"__pycache__", "node_modules", ".DS_Store", ".git"}
 
 # ---------------------------------------------------------------- discovery
 
-def find_skill_dirs(extra_paths=None):
-    """Yield (source, skill_dir) for personal + project skills."""
+def find_skill_dirs(include_installed=False):
+    """Yield (source, skill_dir). Default scope is THIS repo only — my
+    customized skills. include_installed adds ~/.claude/skills entries that
+    are not symlinks back into the repo, labeled third-party."""
     seen = set()
-    roots = [("personal", PERSONAL_SKILLS)]
-    for candidate in (PROJECT_ROOT / "skills", PROJECT_ROOT / ".claude" / "skills"):
-        roots.append(("project", candidate))
     out = []
-    for source, root in roots:
-        if not root.is_dir():
+    for candidate in (PROJECT_ROOT / "skills", PROJECT_ROOT / ".claude" / "skills"):
+        if not candidate.is_dir():
             continue
-        for entry in sorted(root.iterdir()):
+        for entry in sorted(candidate.iterdir()):
             if entry.is_dir() and (entry / "SKILL.md").is_file():
                 real = entry.resolve()
                 if real not in seen:
                     seen.add(real)
-                    out.append((source, entry))
-    for p in extra_paths or []:
-        p = Path(p)
-        if (p / "SKILL.md").is_file() and p.resolve() not in seen:
-            seen.add(p.resolve())
-            out.append(("path", p))
+                    out.append(("mine", entry))
+    if include_installed and PERSONAL_SKILLS.is_dir():
+        for entry in sorted(PERSONAL_SKILLS.iterdir()):
+            if entry.is_dir() and (entry / "SKILL.md").is_file():
+                real = entry.resolve()
+                if real not in seen:
+                    seen.add(real)
+                    out.append(("third-party", entry))
     return out
 
 
@@ -348,11 +349,11 @@ def cmd_new(args):
 
 # ---------------------------------------------------------------- validate
 
-def collect_reports(paths, all_skills):
+def collect_reports(paths, include_installed):
     if paths:
         dirs = [("path", Path(p)) for p in paths]
     else:
-        dirs = find_skill_dirs()
+        dirs = find_skill_dirs(include_installed)
     reports = [dict(validate_skill(d), source=src) for src, d in dirs]
     # cross-skill name collisions (a personal skill silently shadows a project one)
     by_name = {}
@@ -369,7 +370,7 @@ def collect_reports(paths, all_skills):
 
 
 def cmd_validate(args):
-    reports = collect_reports(args.paths, args.all)
+    reports = collect_reports(args.paths, args.installed)
     if args.json:
         print(json.dumps(reports, indent=2))
     else:
@@ -388,15 +389,16 @@ def cmd_validate(args):
 
 
 def cmd_list(args):
-    reports = collect_reports([], True)
+    reports = collect_reports([], args.installed)
     if args.json:
         print(json.dumps(reports, indent=2))
         return
     width = max((len(r["name"]) for r in reports), default=4) + 2
-    print(f"{'NAME':<{width}}{'SOURCE':<10}{'STATUS':<9}{'WORDS':<7}{'AGE':<6}DESCRIPTION")
+    swidth = max([len(r["source"]) for r in reports] + [6]) + 2
+    print(f"{'NAME':<{width}}{'SOURCE':<{swidth}}{'STATUS':<9}{'WORDS':<7}{'AGE':<6}DESCRIPTION")
     for r in reports:
         desc = (r["meta"].get("description") or "—")[:60]
-        print(f"{r['name']:<{width}}{r['source']:<10}{r['status']:<9}"
+        print(f"{r['name']:<{width}}{r['source']:<{swidth}}{r['status']:<9}"
               f"{r.get('words', 0):<7}{r.get('age_days', '?'):<6}{desc}")
 
 
@@ -427,7 +429,7 @@ def cmd_package(args):
 # --------------------------------------------------------------- dashboard
 
 def cmd_dashboard(args):
-    reports = collect_reports([], True)
+    reports = collect_reports([], args.installed)
     out = Path(args.out or PROJECT_ROOT / "docs" / "index.html")
     out.parent.mkdir(parents=True, exist_ok=True)
     template = Path(__file__).parent / "dashboard_template.html"
@@ -476,18 +478,22 @@ def main():
     p.add_argument("--description")
     p.set_defaults(fn=cmd_new)
 
-    p = sub.add_parser("validate", help="lint skills")
+    p = sub.add_parser("validate", help="lint my skills (repo); --installed adds third-party")
     p.add_argument("paths", nargs="*")
-    p.add_argument("--all", action="store_true")
+    p.add_argument("--installed", action="store_true",
+                   help="also check third-party skills in ~/.claude/skills")
     p.add_argument("--json", action="store_true")
     p.set_defaults(fn=cmd_validate)
 
-    p = sub.add_parser("list", help="list all discovered skills")
+    p = sub.add_parser("list", help="list my skills; --installed adds third-party")
+    p.add_argument("--installed", action="store_true")
     p.add_argument("--json", action="store_true")
     p.set_defaults(fn=cmd_list)
 
-    p = sub.add_parser("dashboard", help="generate the HTML dashboard")
+    p = sub.add_parser("dashboard", help="generate the HTML dashboard (my skills only by default)")
     p.add_argument("--out")
+    p.add_argument("--installed", action="store_true",
+                   help="include third-party skills from ~/.claude/skills")
     p.add_argument("--open", action="store_true")
     p.set_defaults(fn=cmd_dashboard)
 
