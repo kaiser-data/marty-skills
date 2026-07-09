@@ -1,0 +1,36 @@
+{
+  "queries": [
+    {
+      "query": "Sandra says she never received our campaign email, can you check what happened",
+      "should_trigger": true
+    },
+    {
+      "query": "why does my newsletter land in spam for AOL recipients",
+      "should_trigger": true
+    },
+    {
+      "query": "we have one hard bounce in the Brevo campaign metrics, what should we do",
+      "should_trigger": true
+    },
+    {
+      "query": "run the pre-send checks before tomorrow's mass mailing",
+      "should_trigger": true
+    },
+    {
+      "query": "clean up unsubscribed contacts from our mailing lists for GDPR",
+      "should_trigger": true
+    },
+    {
+      "query": "draft an HTML email template with a CTA button",
+      "should_trigger": false
+    },
+    {
+      "query": "the email button renders broken in Outlook",
+      "should_trigger": false
+    },
+    {
+      "query": "write the subject line and copy for our launch email",
+      "should_trigger": false
+    }
+  ]
+}

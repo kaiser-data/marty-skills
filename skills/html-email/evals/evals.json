@@ -1,0 +1,44 @@
+{
+  "queries": [
+    {
+      "query": "draft an HTML email for our product launch newsletter",
+      "should_trigger": true
+    },
+    {
+      "query": "this campaign mail looks broken in Outlook, the button has no rounded corners",
+      "should_trigger": true
+    },
+    {
+      "query": "create a responsive email template for Brevo with a CTA button",
+      "should_trigger": true
+    },
+    {
+      "query": "write the confirmation email HTML for new subscribers",
+      "should_trigger": true
+    },
+    {
+      "query": "make the email header logo sit flush right and still work on mobile",
+      "should_trigger": true
+    },
+    {
+      "query": "why does my newsletter land in spam for AOL recipients",
+      "should_trigger": false
+    },
+    {
+      "query": "build a landing page in HTML with a hero section",
+      "should_trigger": false
+    },
+    {
+      "query": "write copy for a marketing email, plain text only",
+      "should_trigger": false
+    },
+    {
+      "query": "fix the CSS on our website navbar",
+      "should_trigger": false
+    },
+    {
+      "query": "set up SPF and DKIM DNS records for our domain",
+      "should_trigger": false
+    }
+  ]
+}
