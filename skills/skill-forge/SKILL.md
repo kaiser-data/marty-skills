@@ -14,11 +14,13 @@ A toolkit for the full lifecycle of Claude Code skills: create → validate → 
 ```
 python3 ${CLAUDE_SKILL_DIR}/scripts/forge.py <command>
   new <name>            scaffold a skill (SKILL.md, references/, scripts/, evals/)
-  validate [PATH ...]   lint all discovered skills, or specific paths; exit 1 on errors
-  list [--json]         table of every personal + project skill
-  dashboard [--open]    regenerate dashboard/index.html
+  validate [PATH ...]   lint my skills, or specific paths; exit 1 on errors
+  list [--json]         table of my skills
+  dashboard [--open]    regenerate docs/index.html (my skills only)
   package <PATH>        validate, then zip to dist/<name>.skill (official format)
 ```
+
+Scope: by default every command covers ONLY the skills in this repo — my customized skills. Third-party skills installed in `~/.claude/skills` (community/official) are deliberately excluded; add `--installed` to inspect them too (read-only inspection — never modify third-party skills, they are upstream-maintained).
 
 ## Creating a new skill
 
@@ -47,7 +49,7 @@ The dashboard's freshness dots (fresh <30d / aging <90d / stale >90d) show which
 
 ## Dashboard
 
-`forge.py dashboard` scans `~/.claude/skills` plus this repo's `skills/` and writes a self-contained `docs/index.html`: health tiles, per-skill cards with validation issues, body size, and staleness. Regenerate it after any skill change; it is committed so GitHub Pages serves it from `docs/`.
+`forge.py dashboard` scans this repo's `skills/` and writes a self-contained `docs/index.html`: health tiles, per-skill cards with validation issues, body size, and staleness. Regenerate it after any skill change; it is committed so GitHub Pages serves it from `docs/`. Use `--installed` for a local one-off view that includes third-party skills — don't commit that variant.
 
 ## References
 

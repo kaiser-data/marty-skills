@@ -1,8 +1,8 @@
 # marty-skills
 
-Personal Claude Code skills, built and maintained with **skill-forge** — a skill that forges skills.
+**My own customized Claude Code skills only** — built and maintained with **skill-forge**, a skill that forges skills. Third-party/community skills (n8n suite, graphify, cognee, …) live separately in `~/.claude/skills` and are deliberately NOT tracked here: they are upstream-maintained and never modified locally.
 
-**[📊 Live dashboard](https://kaiser-data.github.io/marty-skills/)** — health, validation issues, and staleness for every skill.
+**[📊 Live dashboard](https://kaiser-data.github.io/marty-skills/)** — health, validation issues, and staleness for my skills. (`forge.py dashboard --installed` gives a local view that includes third-party skills.)
 
 ## skill-forge
 
@@ -11,8 +11,8 @@ The full lifecycle of a Claude Code skill in one stdlib-only CLI (`skills/skill-
 | Command | What it does |
 |---|---|
 | `new <name>` | Scaffold SKILL.md + `references/` + `scripts/` + `evals/` |
-| `validate` | Lint all personal + project skills against the Agent Skills spec |
-| `list` | One-line status table of every discovered skill |
+| `validate` | Lint this repo's skills against the Agent Skills spec (`--installed` adds third-party, read-only) |
+| `list` | One-line status table of this repo's skills |
 | `dashboard` | Regenerate the self-contained HTML dashboard (`docs/index.html`) |
 | `package <dir>` | Validate, then zip to `dist/<name>.skill` (official format) |
 
