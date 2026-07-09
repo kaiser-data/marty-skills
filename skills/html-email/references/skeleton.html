@@ -1,0 +1,198 @@
+<!-- ============================================================
+  BULLETPROOF EMAIL SKELETON — copy this as the starting point.
+  Proven in production sends (Outlook desktop, Gmail, Apple Mail,
+  AOL, iOS/Android apps). Replace ALL-CAPS placeholders + colors.
+  Brand colors used as example: navy #0d4a70, gold #f2df74,
+  light-blue #1f8fc4, page-bg #eef1f3, text #2b2b2b, muted #5c6669.
+============================================================= -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Stop iOS Mail from shrinking/reformatting the layout -->
+  <meta name="x-apple-disable-message-reformatting" />
+  <!-- Stop clients from auto-linking phone numbers, dates, addresses -->
+  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no" />
+  <!-- Refuse dark-mode color inversion unless designed for it -->
+  <meta name="color-scheme" content="light only" />
+  <meta name="supported-color-schemes" content="light only" />
+  <title>SUBJECT / TITLE</title>
+
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:AllowPNG/>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+
+  <!--[if mso]>
+  <style type="text/css">
+    /* Outlook ignores system/web font stacks and falls back to Times — force Arial */
+    body, table, td, p, a, span, div { font-family: Arial, Helvetica, sans-serif !important; }
+  </style>
+  <![endif]-->
+
+  <style type="text/css">
+    /* Progressive-enhancement CSS — layout stays inline; this block is only
+       Reset + Media-Query. Gmail may strip parts of it; nothing critical here. */
+    html, body { margin: 0 !important; padding: 0 !important; height: 100% !important; width: 100% !important; }
+    * { -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important; border-collapse: collapse !important; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    a { text-decoration: none; }
+    /* Kill Apple Mail's blue auto-detected links (dates, addresses, phones) */
+    a[x-apple-data-detectors], .unstyle-auto-detected-links a { color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important; }
+    /* Gmail (u + #body) auto-link color fix */
+    u + #body a { color: inherit; text-decoration: none; }
+
+    @media only screen and (max-width: 620px) {
+      .email-container { width: 100% !important; margin: 0 auto !important; }
+      .px { padding-left: 22px !important; padding-right: 22px !important; }
+      .h1 { font-size: 26px !important; line-height: 32px !important; }
+      /* Big CTAs hug their label on mobile (narrower, centered); a wrapped
+         2-line label gets tight line spacing instead of the desktop 50px rows. */
+      .btn-a { display: inline-block !important; width: auto !important; min-width: 0 !important; box-sizing: border-box !important; line-height: 21px !important; padding: 12px 20px !important; }
+      /* Header stays on ONE line: logo shrinks, button padding tightens so
+         both fit even on 320px screens. */
+      .hdr-badge { width: 72px !important; max-width: 72px !important; height: auto !important; }
+      .hdr-btn { padding: 8px 14px !important; }
+    }
+  </style>
+</head>
+
+<body id="body" style="margin:0; padding:0; width:100%; background-color:#eef1f3; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;">
+
+  <!-- Hidden preheader = inbox preview line; &zwnj;&nbsp; padding keeps body text out of the preview -->
+  <div style="display:none; font-size:1px; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden; mso-hide:all; font-family:Arial,sans-serif; color:#eef1f3;">
+    PREHEADER TEXT — one enticing sentence, ~90 chars.
+    &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+  </div>
+
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#eef1f3;">
+    <tr>
+      <td align="center" style="padding:24px 12px;">
+
+        <!--[if mso]>
+        <table role="presentation" align="center" cellspacing="0" cellpadding="0" border="0" width="600"><tr><td>
+        <![endif]-->
+
+        <table role="presentation" class="email-container" align="center" cellspacing="0" cellpadding="0" border="0" width="600" style="width:600px; max-width:600px; background-color:#ffffff;">
+
+          <!-- ===== HEADER BAR: CTA left, logo flush RIGHT, gold underline.
+               Technique: dir="rtl" table with the badge cell FIRST in the DOM
+               renders it flush right; button cell (width:100%) hugs the left.
+               Outlook honors dir="rtl" too; every cell resets to dir="ltr".
+               Solid bgcolor band = bulletproof when images are blocked. ===== -->
+          <tr>
+            <td bgcolor="#0d4a70" style="background-color:#0d4a70; border-bottom:4px solid #f2df74; padding:10px 22px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" dir="rtl">
+                <tr>
+                  <td class="hdr-col" dir="ltr" align="right" valign="middle" style="text-align:right;">
+                    <img class="hdr-badge" src="https://YOURDOMAIN/badge.png?v=1" width="84" height="84" alt="EVENT / BRAND NAME" style="display:inline-block; width:84px; max-width:84px; height:auto; border:0; outline:none; -ms-interpolation-mode:bicubic;" />
+                  </td>
+                  <td class="hdr-gap" width="18" style="width:18px; font-size:0; line-height:0;">&nbsp;</td>
+                  <td class="hdr-col" dir="ltr" align="left" valign="middle" width="100%" style="width:100%; text-align:left;">
+                    <!--[if mso]>
+                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://CTA-URL" style="height:50px;v-text-anchor:middle;width:206px;" arcsize="16%" strokecolor="#bfe2f3" strokeweight="1.5pt" fillcolor="#1f8fc4">
+                      <w:anchorlock/>
+                      <center style="color:#ffffff;font-family:Arial,sans-serif;font-size:13px;font-weight:bold;">CTA LINE 1<br/>CTA LINE 2 &rsaquo;</center>
+                    </v:roundrect>
+                    <![endif]-->
+                    <!--[if !mso]><!-- -->
+                    <a class="hdr-btn" href="https://CTA-URL" style="background-color:#1f8fc4; border:2px solid #bfe2f3; border-radius:8px; box-shadow:0 3px 0 #0e5274; color:#ffffff; display:inline-block; font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:bold; line-height:17px; text-align:center; text-decoration:none; padding:9px 18px; white-space:nowrap; mso-hide:all;">CTA LINE 1<br />CTA LINE 2 &rsaquo;</a>
+                    <!--<![endif]-->
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ===== BODY COPY ===== -->
+          <tr>
+            <td class="px" style="padding:34px 40px 22px 40px; font-family:Arial,Helvetica,sans-serif; font-size:16px; line-height:24px; color:#2b2b2b;">
+              <!-- Merge tags: map to the sending system (e.g. Brevo) before send -->
+              <p style="margin:0 0 18px 0;">Liebe(r) {{ FIRSTNAME }} {{ LASTNAME }},</p>
+              <p style="margin:0 0 18px 0;">BODY PARAGRAPH — non-ASCII as entities: &uuml; &auml; &szlig; &ndash; &euro;.</p>
+              <p style="margin:0;">Inline links: <a href="https://CTA-URL" style="color:#0d4a70; font-weight:bold; text-decoration:underline;">LINK TEXT</a>.</p>
+            </td>
+          </tr>
+
+          <!-- ===== CALLOUT BOX with big CTA (VML for Outlook + padded anchor) ===== -->
+          <tr>
+            <td class="px" style="padding:16px 40px 4px 40px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" bgcolor="#fbf7e3" style="background-color:#fbf7e3; border:1px solid #f2df74; border-radius:8px;">
+                <tr>
+                  <td style="padding:18px 20px; font-family:Arial,Helvetica,sans-serif; font-size:15px; line-height:22px; color:#2b2b2b;">
+                    <p style="margin:0 0 6px 0; font-weight:bold; color:#8a6d00; font-size:16px;">CALLOUT HEADLINE</p>
+                    <p style="margin:0;">CALLOUT BODY TEXT.</p>
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td align="center" style="padding-top:16px;">
+                          <!--[if mso]>
+                          <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://CTA-URL" style="height:50px;v-text-anchor:middle;width:340px;" arcsize="10%" strokecolor="#0a3a59" fillcolor="#0d4a70">
+                            <w:anchorlock/>
+                            <center style="color:#ffffff;font-family:Arial,sans-serif;font-size:16px;font-weight:bold;">BIG CTA LABEL</center>
+                          </v:roundrect>
+                          <![endif]-->
+                          <!--[if !mso]><!-- -->
+                          <a class="btn-a" href="https://CTA-URL" style="background-color:#0d4a70; border:1px solid #0a3a59; border-radius:6px; color:#ffffff; display:inline-block; font-family:Arial,Helvetica,sans-serif; font-size:16px; font-weight:bold; line-height:50px; min-width:280px; text-align:center; text-decoration:none; padding:0 24px; -webkit-text-size-adjust:none; mso-hide:all;">BIG CTA LABEL</a>
+                          <!--<![endif]-->
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ===== DIVIDER (never <hr>) ===== -->
+          <tr>
+            <td class="px" style="padding:0 40px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"><tr><td bgcolor="#e3e7e9" style="background-color:#e3e7e9; height:1px; line-height:1px; font-size:1px;">&nbsp;</td></tr></table>
+            </td>
+          </tr>
+
+          <!-- ===== SIGN-OFF ===== -->
+          <tr>
+            <td class="px" style="padding:24px 40px 16px 40px; font-family:Arial,Helvetica,sans-serif; font-size:16px; line-height:24px; color:#2b2b2b;">
+              <p style="margin:0 0 14px 0;">SIGN-OFF GREETING</p>
+              <p style="margin:0 0 4px 0; font-weight:bold; color:#0d4a70;">SENDER / TEAM NAME</p>
+            </td>
+          </tr>
+
+          <!-- ===== FOOTER (Impressum + unsubscribe — MANDATORY) ===== -->
+          <tr>
+            <td bgcolor="#0d4a70" class="px" style="background-color:#0d4a70; padding:24px 40px; font-family:Arial,Helvetica,sans-serif; font-size:12px; line-height:18px; color:#c4d3df;">
+              <p style="margin:0 0 8px 0; color:#ffffff; font-weight:bold;">BRAND / EVENT NAME</p>
+              <p style="margin:0 0 12px 0;">
+                RESPONSIBLE PERSON, ADDRESS, PHONE<br />
+                Kontakt: <a href="mailto:CONTACT@DOMAIN" style="color:#f2df74; text-decoration:underline;">CONTACT@DOMAIN</a>
+              </p>
+              <p style="margin:0;">
+                WHY-YOU-GOT-THIS LINE (consent basis).<br />
+                <a href="{{ UNSUBSCRIBE }}" style="color:#f2df74; text-decoration:underline;">Abmelden</a>
+                &nbsp;&middot;&nbsp;
+                <a href="https://YOURDOMAIN" style="color:#f2df74; text-decoration:underline;">YOURDOMAIN</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+
+        <!--[if mso]>
+        </td></tr></table>
+        <![endif]-->
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
