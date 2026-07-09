@@ -1,0 +1,42 @@
+# marty-skills
+
+Personal Claude Code skills, built and maintained with **skill-forge** — a skill that forges skills.
+
+**[📊 Live dashboard](https://kaiser-data.github.io/marty-skills/)** — health, validation issues, and staleness for every skill.
+
+## skill-forge
+
+The full lifecycle of a Claude Code skill in one stdlib-only CLI (`skills/skill-forge/scripts/forge.py`):
+
+| Command | What it does |
+|---|---|
+| `new <name>` | Scaffold SKILL.md + `references/` + `scripts/` + `evals/` |
+| `validate` | Lint all personal + project skills against the Agent Skills spec |
+| `list` | One-line status table of every discovered skill |
+| `dashboard` | Regenerate the self-contained HTML dashboard (`docs/index.html`) |
+| `package <dir>` | Validate, then zip to `dist/<name>.skill` (official format) |
+
+```bash
+python3 skills/skill-forge/scripts/forge.py validate
+python3 skills/skill-forge/scripts/forge.py dashboard --open
+```
+
+### What `validate` checks
+
+- **Spec tier (errors):** frontmatter present; field whitelist (`name, description, license, allowed-tools, metadata, compatibility`); name ≤64 chars, kebab-case, matches directory; description 1–1024 chars, no angle brackets.
+- **Quality tier (warnings):** missing "use when" trigger cues, first-person descriptions, bodies over 500 lines / 5,000 words, broken file references, leftover TODO/placeholder markers, Claude Code-only frontmatter fields (portability), cross-skill name collisions.
+- **Safety tier (warnings):** bundled scripts containing `curl | sh`, destructive `rm -rf`, `sudo`, `chmod 777`, or base64-decoded execution — review any third-party skill before installing it.
+
+### Install as a personal skill
+
+```bash
+ln -s "$(pwd)/skills/skill-forge" ~/.claude/skills/skill-forge
+```
+
+Then in any Claude Code session: *"validate my skills"*, *"create a new skill for X"*, *"regenerate the skill dashboard"*.
+
+## Philosophy: skills are living documents
+
+Skills rot — APIs change, descriptions undertrigger, bodies bloat. The dashboard tracks freshness (fresh <30d / aging <90d / stale >90d), and skill-forge's SKILL.md includes a dedicated *"Improving an existing skill"* workflow. Stale skills get an update pass, not a pass.
+
+Built on the [Agent Skills spec](https://agentskills.io/specification), Anthropic's [skill-creator](https://github.com/anthropics/skills), and conventions from skill-lint, cclint, and agent-skills-lint.

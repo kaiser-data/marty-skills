@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skill Forge Dashboard</title>
+<style>
+  :root {
+    --page:        #f9f9f7;
+    --surface:     #fcfcfb;
+    --ink:         #0b0b0b;
+    --ink-2:       #52514e;
+    --muted:       #898781;
+    --hairline:    #e1e0d9;
+    --border:      rgba(11,11,11,0.10);
+    --accent:      #2a78d6;
+    --good:        #0ca30c;
+    --warning:     #fab219;
+    --serious:     #ec835a;
+    --critical:    #d03b3b;
+    --good-text:   #006300;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --page:      #0d0d0d;
+      --surface:   #1a1a19;
+      --ink:       #ffffff;
+      --ink-2:     #c3c2b7;
+      --muted:     #898781;
+      --hairline:  #2c2c2a;
+      --border:    rgba(255,255,255,0.10);
+      --accent:    #3987e5;
+      --good-text: #0ca30c;
+    }
+  }
+  :root[data-theme="dark"] {
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7;
+    --hairline: #2c2c2a; --border: rgba(255,255,255,0.10);
+    --accent: #3987e5; --good-text: #0ca30c;
+  }
+  :root[data-theme="light"] {
+    --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e;
+    --hairline: #e1e0d9; --border: rgba(11,11,11,0.10);
+    --accent: #2a78d6; --good-text: #006300;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--page); color: var(--ink);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+    padding: 32px 24px 64px; max-width: 1100px; margin: 0 auto;
+  }
+  header { margin-bottom: 24px; }
+  h1 { font-size: 22px; font-weight: 650; letter-spacing: -0.01em; }
+  .sub { color: var(--ink-2); font-size: 13px; margin-top: 4px; }
+
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 20px 0 24px; }
+  .tile {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .tile .label { font-size: 12px; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.04em; }
+  .tile .value { font-size: 30px; font-weight: 650; margin-top: 2px; }
+  .tile .note { font-size: 12px; color: var(--muted); }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+  .chip {
+    border: 1px solid var(--hairline); background: var(--surface); color: var(--ink-2);
+    border-radius: 999px; padding: 4px 12px; font-size: 13px; cursor: pointer;
+  }
+  .chip.active { border-color: var(--accent); color: var(--ink); font-weight: 600; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 8px;
+  }
+  .card .top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+  .card h2 { font-size: 15px; font-weight: 650; word-break: break-word; }
+  .badge { font-size: 11px; color: var(--muted); border: 1px solid var(--hairline); border-radius: 4px; padding: 1px 6px; white-space: nowrap; }
+  .status { font-size: 12.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
+  .status.ok      { color: var(--good-text); }
+  .status.warning { color: var(--ink); }
+  .status.error   { color: var(--critical); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .desc { color: var(--ink-2); font-size: 13px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .desc.empty { color: var(--critical); font-style: italic; }
+  .meta { display: flex; gap: 14px; font-size: 12px; color: var(--muted); flex-wrap: wrap; margin-top: auto; }
+  .meta b { color: var(--ink-2); font-weight: 600; }
+
+  .sizebar { height: 4px; border-radius: 2px; background: var(--hairline); overflow: hidden; }
+  .sizebar > i { display: block; height: 100%; background: var(--accent); border-radius: 2px; }
+
+  details { font-size: 12.5px; }
+  summary { cursor: pointer; color: var(--ink-2); }
+  details li { margin-left: 16px; color: var(--ink-2); }
+  details li.err { color: var(--critical); }
+
+  .fresh-fresh { background: var(--good); }
+  .fresh-aging { background: var(--warning); }
+  .fresh-stale { background: var(--serious); }
+
+  .empty-state { color: var(--muted); padding: 40px; text-align: center; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🛠 Skill Forge Dashboard</h1>
+  <div class="sub">Generated __GENERATED__ · <code>forge.py dashboard</code> to refresh</div>
+</header>
+
+<div class="tiles" id="tiles"></div>
+<div class="filters" id="filters"></div>
+<div class="grid" id="grid"></div>
+
+<script>
+const DATA = /*__DATA__*/[];
+
+const STATUS = {
+  ok:      { icon: "✓", label: "healthy" },
+  warning: { icon: "⚠", label: "warnings" },
+  error:   { icon: "✗", label: "errors" },
+};
+const state = { source: "all", status: "all" };
+
+function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])); }
+
+function tiles() {
+  const total = DATA.length;
+  const healthy = DATA.filter(d => d.status === "ok").length;
+  const warn = DATA.filter(d => d.status === "warning").length;
+  const err = DATA.filter(d => d.status === "error").length;
+  const stale = DATA.filter(d => d.freshness === "stale").length;
+  document.getElementById("tiles").innerHTML = [
+    ["Skills", total, "personal + project"],
+    ["Healthy", healthy, "no issues"],
+    ["Warnings", warn, "worth improving"],
+    ["Errors", err, "fix these first"],
+    ["Stale", stale, "> 90 days untouched"],
+  ].map(([l, v, n]) => `<div class="tile"><div class="label">${l}</div><div class="value">${v}</div><div class="note">${n}</div></div>`).join("");
+}
+
+function filters() {
+  const sources = ["all", ...new Set(DATA.map(d => d.source))];
+  const statuses = ["all", "ok", "warning", "error"];
+  document.getElementById("filters").innerHTML =
+    sources.map(s => `<button class="chip ${state.source === s ? "active" : ""}" data-k="source" data-v="${s}">${s === "all" ? "all sources" : s}</button>`).join("") +
+    `<span style="width:12px"></span>` +
+    statuses.map(s => `<button class="chip ${state.status === s ? "active" : ""}" data-k="status" data-v="${s}">${s === "all" ? "all statuses" : (STATUS[s]?.label ?? s)}</button>`).join("");
+  document.querySelectorAll(".chip").forEach(c =>
+    c.onclick = () => { state[c.dataset.k] = c.dataset.v; render(); });
+}
+
+function grid() {
+  const rows = DATA.filter(d =>
+    (state.source === "all" || d.source === state.source) &&
+    (state.status === "all" || d.status === state.status));
+  const maxWords = Math.max(1, ...DATA.map(d => d.words || 0));
+  const el = document.getElementById("grid");
+  if (!rows.length) { el.innerHTML = `<div class="empty-state">No skills match the current filters.</div>`; return; }
+  el.innerHTML = rows.map(d => {
+    const st = STATUS[d.status] ?? STATUS.warning;
+    const issues = [...d.errors.map(e => `<li class="err">✗ ${esc(e)}</li>`),
+                    ...d.warnings.map(w => `<li>⚠ ${esc(w)}</li>`)].join("");
+    const desc = d.description
+      ? `<div class="desc" title="${esc(d.description)}">${esc(d.description)}</div>`
+      : `<div class="desc empty">no description — this skill can never auto-trigger</div>`;
+    return `<div class="card">
+      <div class="top"><h2>${esc(d.name)}</h2><span class="badge">${esc(d.source)}</span></div>
+      <span class="status ${d.status}">${st.icon} ${st.label}</span>
+      ${desc}
+      <div class="sizebar" title="${d.words} words"><i style="width:${Math.round(100 * (d.words || 0) / maxWords)}%"></i></div>
+      <div class="meta">
+        <span><b>${d.words}</b> words</span>
+        <span><b>${d.files}</b> files</span>
+        <span><span class="dot fresh-${esc(d.freshness)}"></span> updated <b>${d.age_days ?? "?"}d</b> ago</span>
+      </div>
+      ${issues ? `<details><summary>${d.errors.length + d.warnings.length} issue(s)</summary><ul>${issues}</ul></details>` : ""}
+    </div>`;
+  }).join("");
+}
+
+function render() { tiles(); filters(); grid(); }
+render();
+</script>
+</body>
+</html>
