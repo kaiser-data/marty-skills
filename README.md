@@ -35,6 +35,27 @@ ln -s "$(pwd)/skills/skill-forge" ~/.claude/skills/skill-forge
 
 Then in any Claude Code session: *"validate my skills"*, *"create a new skill for X"*, *"regenerate the skill dashboard"*.
 
+## tailscale-endpoints
+
+Endpoint catalogue and recipes for calling self-hosted APIs across the tailnet — primarily the [Jetson voice AI box](https://github.com/kaiser-data/jetson-headless-inference) (Ollama LLM, voice pipeline, Piper TTS, control API): MagicDNS addressing, auth, streaming-vs-speaker output, timeout guidance, and the debugging path for unreachable services.
+
+## Using these skills from other agents (OpenClaw, etc.)
+
+Every skill here sticks to the **portable core** of the [Agent Skills spec](https://agentskills.io/specification) — no Claude Code-only frontmatter — so any agent that reads `SKILL.md` folders can use them:
+
+```bash
+# Claude Code (personal skill)
+ln -s "$(pwd)/skills/tailscale-endpoints" ~/.claude/skills/tailscale-endpoints
+
+# OpenClaw
+ln -s "$(pwd)/skills/tailscale-endpoints" ~/.openclaw/skills/tailscale-endpoints
+
+# Any other Agent Skills-compatible runtime: point it at skills/<name>/,
+# or ship the packaged zip:  python3 skills/skill-forge/scripts/forge.py package skills/<name>
+```
+
+`forge.py validate` warns on non-portable frontmatter, so portability is enforced, not just intended.
+
 ## Philosophy: skills are living documents
 
 Skills rot — APIs change, descriptions undertrigger, bodies bloat. The dashboard tracks freshness (fresh <30d / aging <90d / stale >90d), and skill-forge's SKILL.md includes a dedicated *"Improving an existing skill"* workflow. Stale skills get an update pass, not a pass.
