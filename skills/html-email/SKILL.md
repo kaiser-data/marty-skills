@@ -1,6 +1,6 @@
 ---
 name: html-email
-description: "Draft bulletproof HTML emails that render correctly in the maximum range of email clients (Outlook desktop, Gmail, Apple Mail, AOL/Yahoo, mobile apps). Use when writing or editing email HTML: newsletters, campaign mails, confirmation/welcome mails, email templates, Brevo/Mailchimp/SendGrid campaigns, or when a mail renders broken in Outlook/Gmail or lands in spam."
+description: "Draft bulletproof HTML emails that render correctly in the maximum range of email clients (Outlook desktop, Gmail, Apple Mail, AOL/Yahoo, mobile apps). Use when writing or editing email HTML: newsletters, campaign mails, confirmation/welcome mails, email templates, campaigns in any ESP (Brevo, CleverReach, Mailchimp, SendGrid, Mailjet, …), or when a mail renders broken in Outlook/Gmail or lands in spam."
 ---
 
 # HTML Email Drafting
@@ -15,7 +15,7 @@ Produce campaign-grade HTML email that survives the hostile rendering landscape:
 4. **Solid `bgcolor` everywhere a background matters** — set it as HTML attribute AND inline style. Background images are not bulletproof; a solid-color band with alt-texted image on top degrades gracefully when images are blocked.
 5. **HTML entities for all non-ASCII** (`&uuml;`, `&ndash;`, `&euro;`) — survives any charset mangling in transit.
 6. **Every `<img>`**: absolute HTTPS URL with a cache-buster (`?v=N`, bump N when the asset changes — clients and proxies cache hard), `width`/`height` attributes, meaningful `alt`, `style="display:block;border:0;height:auto;-ms-interpolation-mode:bicubic"`.
-7. **Merge tags stay literal** (`{{ FIRSTNAME }}`, `{{ UNSUBSCRIBE }}`) — map them to the sending system's syntax only at send time; comment which system they target.
+7. **Merge tags stay literal** (`{{ FIRSTNAME }}`, `{{ UNSUBSCRIBE }}`) — the skeletons are ESP-neutral; map placeholders to the actual sending system's syntax only at send time and comment which system they target. Syntax differs per ESP (Brevo `{{ contact.FIRSTNAME }}`, CleverReach `{FIRSTNAME}`, Mailchimp `*|FNAME|*`/`*|UNSUB|*`, SendGrid handlebars) — confirm in the ESP's placeholder docs, and verify the unsubscribe placeholder resolves in a real test send before the campaign.
 
 ## Workflow
 
@@ -27,7 +27,7 @@ Produce campaign-grade HTML email that survives the hostile rendering landscape:
 4. Add the hidden **preheader** div as the first body element — the inbox preview line. Pad it with `&nbsp;&zwnj;` repeats so body text doesn't leak into the preview.
 5. Check the mobile media query (`max-width:620px`): container 100%, side padding tightens to 22px, headline shrinks, CTAs become `display:inline-block; width:auto; line-height:21px; padding:12px 20px` — buttons **hug their label, centered**, not full-width; a wrapped 2-line label needs the tight 21px line-height instead of the desktop 50px row. Layout must survive a 320px screen.
 6. Footer is mandatory: sender identity/Impressum, why-you-got-this line, `{{ UNSUBSCRIBE }}` link. Missing unsubscribe = spam folder + legal problem.
-7. **Verify before sending**: real test sends to Outlook + Gmail + one mobile client minimum; iterate on what the user sees. Renderers cannot be simulated reliably — expect 2–3 test iterations.
+7. **Verify before sending**: real test sends to Outlook + Gmail + one mobile client minimum (every ESP has a test-send function — Brevo, CleverReach, Mailchimp, …); iterate on what the user sees. Renderers cannot be simulated reliably — expect 2–3 test iterations. Point the user to render-testing tools to cut iterations: see "Testing tools" in `references/client-quirks.md`.
 
 ## Layout techniques that work everywhere
 
