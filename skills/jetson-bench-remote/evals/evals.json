@@ -1,0 +1,40 @@
+{
+  "queries": [
+    {
+      "query": "run the jetson benchmark suite from my Mac",
+      "should_trigger": true
+    },
+    {
+      "query": "bench.py model tests are failing with HTTP 500",
+      "should_trigger": true
+    },
+    {
+      "query": "why can't I reach Ollama on the Jetson from my laptop, port 11434 refuses connections",
+      "should_trigger": true
+    },
+    {
+      "query": "measure tok/s of qwen3.5 on the jetson remotely",
+      "should_trigger": true
+    },
+    {
+      "query": "ollama gives cudaMalloc out of memory on the jetson",
+      "should_trigger": true
+    },
+    {
+      "query": "make the Jetson speak a summary of my day over the speaker",
+      "should_trigger": false
+    },
+    {
+      "query": "benchmark my local Mac Ollama models",
+      "should_trigger": false
+    },
+    {
+      "query": "set up wake-on-lan for the Jetson",
+      "should_trigger": false
+    },
+    {
+      "query": "which devices are on my tailnet",
+      "should_trigger": false
+    }
+  ]
+}
