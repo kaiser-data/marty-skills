@@ -35,6 +35,10 @@ ln -s "$(pwd)/skills/skill-forge" ~/.claude/skills/skill-forge
 
 Then in any Claude Code session: *"validate my skills"*, *"create a new skill for X"*, *"regenerate the skill dashboard"*.
 
+## kitsune-gateway
+
+How to mount any of 130,000+ MCP servers on demand through [Kitsune MCP](https://github.com/kaiser-data/kitsune-mcp) (own project) instead of keeping heavy servers always-on: the `search → shapeshift → call → shapeshift()` loop, surgical tool mounts, credential handling, and the decision rule for CLI vs on-demand mount vs dedicated always-on session (break-even at Kitsune's ~1.3K-token floor).
+
 ## tailscale-endpoints
 
 Endpoint catalogue and recipes for calling self-hosted APIs across the tailnet — primarily the [Jetson voice AI box](https://github.com/kaiser-data/jetson-headless-inference) (Ollama LLM, voice pipeline, Piper TTS, control API): MagicDNS addressing, auth, streaming-vs-speaker output, timeout guidance, and the debugging path for unreachable services.
