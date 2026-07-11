@@ -27,6 +27,16 @@ Client repo: [jetson-bench](https://github.com/kaiser-data/jetson-bench) (stdlib
   11434 refuses external connections — that combination means *localhost
   binding*, not "service down".
 
+## Preferred: the automatic loop
+
+`./run-full-test.sh` (in the bench repo) does the whole cycle unattended:
+suspend → WoL wake (timed, ~9–11 s) → verify auto-`MAXN_SUPER` → bench →
+push results → back to sleep. It **auto-bridges Ollama over SSH** when 11434
+is loopback-bound, with an endpoint-identity check — the manual tunnel below
+is only needed for ad-hoc debugging. LAN example:
+`JETSON_HOST=192.168.0.115 WOL_BROADCAST=192.168.0.255 ./run-full-test.sh`
+(add `--stay-awake` to skip the final suspend).
+
 ## Reaching Ollama from the Mac: the IPv6 tunnel trick
 
 The Mac runs its **own local Ollama on IPv4 `127.0.0.1:11434`** — a plain
