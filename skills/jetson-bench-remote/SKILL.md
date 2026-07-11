@@ -76,7 +76,7 @@ connectivity + TTS + STT go through the externally-bound ports. (Requires the
 fix in commit `cbfa831`; before it, bench.py aborted on Ollama failure even
 with `--skip-models`.)
 
-## HTTP 500 on model tests = CUDA out of memory
+## HTTP 500 on model tests = CUDA out of memory (SOLVED 2026-07-11)
 
 `/api/generate` returning 500 with models correctly installed means
 `cudaMalloc failed: out of memory`. Get the real error body:
@@ -86,20 +86,37 @@ curl -s 'http://[::1]:11434/api/generate' \
   -d '{"model":"qwen3.5:0.8b","prompt":"hi","stream":false,"options":{"num_predict":5}}'
 ```
 
-Jetson-specific trap: the 8 GB is a **unified CPU/GPU pool and CUDA buffers
-cannot be swap-backed**, so `free -m` showing gigabytes "available" does not
-mean a model can load — if swap is already in use, GPU allocations far smaller
-than "available" RAM still fail. Check pressure (read-only):
+**Root cause (verified):** the 8 GB is a unified CPU/GPU pool, CUDA buffers
+cannot be swap-backed, **and on Tegra `cudaMalloc` fails instead of forcing
+page-cache reclaim**. Worst part: reading the GGUF blob during load fills the
+page cache with the model file itself (~2.5 GB for qwen3.5:4b), which then
+starves the very CUDA allocation the read was feeding — that's why 4b/phi4-mini
+failed on this box on *every* recorded run even with 5 GB "available" and
+swap=0. `free -m`'s "available" is a lie for CUDA purposes; only "free" counts.
 
-```bash
-ssh marty@100.78.34.27 "free -m | head -3; ps axo rss,comm --sort=-rss | head -12"
-```
+**The fix — user-space only, no sudo (built into `bench.py --mem-prep user@host`,
+run-full-test.sh passes it automatically):**
 
-Usual suspects on this box: voice-pipeline python3 with Whisper loaded (~770 MB),
-GNOME stack (~500 MB, shouldn't be running for benchmarks per the README),
-long-running `claude`/`bun` processes. Remedies in escalating order: stop the
-voice pipeline's Whisper, stop GNOME (`sudo systemctl stop gdm` — needs
-password), reboot. Re-run the bench only after `swap used` is near zero.
+1. **Balloon**: allocate+touch ~4.6 GB in a throwaway python process on the
+   Jetson, then exit — forces the kernel to evict page cache and swap idle
+   anon pages (e.g. the resident Whisper).
+2. **fadvise loop**: while the model loads, a background loop runs
+   `os.posix_fadvise(blob_fd, 0, 0, POSIX_FADV_DONTNEED)` on the model's blob
+   (world-readable, path from `/api/show` modelfile `FROM` line) every 0.5 s
+   so its read-cache can't refill.
+
+With this recipe (GNOME + voice stack still running!): qwen3.5:4b **14.4 tok/s**
+(load ~12 s), phi4-mini **18.0 tok/s** (load ~9 s) — first successful runs ever
+for both. Works at Ollama's default ctx and `num_ctx=2048`.
+
+Escalation if the recipe isn't enough: stop the voice pipeline's Whisper
+(`systemctl --user stop jetson-pipeline` — user unit, no sudo, **ask Marty
+first**: the permission classifier blocks remote service stops), stop GNOME
+(`sudo systemctl stop gdm` — whitelisted in `/etc/sudoers.d/jetson-maint`),
+reboot. Note qwen3.5:4b is really 4.7B Q4_K_M **plus a 24-block vision tower**;
+weights buffer alone is 2.46 GiB. Also note qwen3.5 is a thinking model —
+its `/api/generate` output lands in the `thinking` field, `response` may be
+empty; `eval_count`/`eval_duration` (what bench.py uses) stay correct.
 
 ## Publishing results
 
