@@ -39,6 +39,10 @@ Then in any Claude Code session: *"validate my skills"*, *"create a new skill fo
 
 How to mount any of 130,000+ MCP servers on demand through [Kitsune MCP](https://github.com/kaiser-data/kitsune-mcp) (own project) instead of keeping heavy servers always-on: the `search → shapeshift → call → shapeshift()` loop, surgical tool mounts, credential handling, and the decision rule for CLI vs on-demand mount vs dedicated always-on session (break-even at Kitsune's ~1.3K-token floor).
 
+## kitsune-dev
+
+Hot-reload loop for developing your **own** MCP server through [Kitsune MCP](https://github.com/kaiser-data/kitsune-mcp) — an MCP REPL. Kitsune stays mounted as the stable gateway while your work-in-progress server runs as a child process underneath; the `release → connect → shapeshift` reload cycles the child so edited tool code and schemas go live in the **same session**, no client restart. Covers the one footgun (the warm pool serves stale code if you re-`connect()` without `release()` first), absolute-path and naming rules, stderr-based crash debugging, and a minimal FastMCP scaffold to start from.
+
 ## tailscale-endpoints
 
 Endpoint catalogue and recipes for calling self-hosted APIs across the tailnet — primarily the [Jetson voice AI box](https://github.com/kaiser-data/jetson-headless-inference) (Ollama LLM, voice pipeline, Piper TTS, control API): MagicDNS addressing, auth, streaming-vs-speaker output, timeout guidance, and the debugging path for unreachable services.
