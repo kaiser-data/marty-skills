@@ -43,6 +43,10 @@ How to mount any of 130,000+ MCP servers on demand through [Kitsune MCP](https:/
 
 Hot-reload loop for developing your **own** MCP server through [Kitsune MCP](https://github.com/kaiser-data/kitsune-mcp) — an MCP REPL. Kitsune stays mounted as the stable gateway while your work-in-progress server runs as a child process underneath; the `release → connect → shapeshift` reload cycles the child so edited tool code and schemas go live in the **same session**, no client restart. Covers the one footgun (the warm pool serves stale code if you re-`connect()` without `release()` first), absolute-path and naming rules, stderr-based crash debugging, and a minimal FastMCP scaffold to start from.
 
+## kitsune-improve
+
+Turn a raw, low-quality MCP server into a reliably-usable one through [Kitsune MCP](https://github.com/kaiser-data/kitsune-mcp) — the "improve" companion to kitsune-dev (develop) and kitsune-gateway (mount). The long tail of 130k servers is where tool definitions are worst (missing descriptions, thin schemas with no `required`, name collisions), so an agent handed that surface makes wrong calls. This skill drives Kitsune's **existing** tools — `test` (quality score + diagnosis), `inspect` (live schemas + resource docs), lean `shapeshift` — in a diagnose → improve → apply loop: the agent writes the corrected usage map, then mounts only the good tools (sandboxed for untrusted sources). No `improve()` tool is added to Kitsune — the intelligence lives in the skill so the gateway stays slim. Also covers hardening your **own** server's tool definitions via the kitsune-dev reload loop until `test()` scores "Good".
+
 ## tailscale-endpoints
 
 Endpoint catalogue and recipes for calling self-hosted APIs across the tailnet — primarily the [Jetson voice AI box](https://github.com/kaiser-data/jetson-headless-inference) (Ollama LLM, voice pipeline, Piper TTS, control API): MagicDNS addressing, auth, streaming-vs-speaker output, timeout guidance, and the debugging path for unreachable services.
