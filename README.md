@@ -4,9 +4,17 @@
 
 **[📊 Live dashboard](https://kaiser-data.github.io/marty-skills/)** — health, validation issues, and staleness for my skills. (`forge.py dashboard --installed` gives a local view that includes third-party skills.)
 
+## Layout: public here, personal elsewhere
+
+Everything in this repo lives under **`skills/public/`** — skills that are useful to anyone and contain nothing about my setup: `skill-forge`, `kitsune-gateway`, `kitsune-dev`, `kitsune-improve`, `html-email`, `email-deliverability`, `mock-purge`.
+
+Skills bound to my own infrastructure (`jetson-bench-remote`, `tailscale-endpoints`, `star-reports`) live in a **separate private repo** — they carry real hostnames, tailnet names, IPs and usernames, which have no business being in a public repo.
+
+The rule for new skills: if it contains a hostname, an IP, a username, or a path from my setup, it goes to the private repo. Otherwise `forge.py new` scaffolds it into `skills/public/` by default.
+
 ## skill-forge
 
-The full lifecycle of a Claude Code skill in one stdlib-only CLI (`skills/skill-forge/scripts/forge.py`):
+The full lifecycle of a Claude Code skill in one stdlib-only CLI (`skills/public/skill-forge/scripts/forge.py`):
 
 | Command | What it does |
 |---|---|
@@ -17,8 +25,8 @@ The full lifecycle of a Claude Code skill in one stdlib-only CLI (`skills/skill-
 | `package <dir>` | Validate, then zip to `dist/<name>.skill` (official format) |
 
 ```bash
-python3 skills/skill-forge/scripts/forge.py validate
-python3 skills/skill-forge/scripts/forge.py dashboard --open
+python3 skills/public/skill-forge/scripts/forge.py validate
+python3 skills/public/skill-forge/scripts/forge.py dashboard --open
 ```
 
 ### What `validate` checks
@@ -30,7 +38,7 @@ python3 skills/skill-forge/scripts/forge.py dashboard --open
 ### Install as a personal skill
 
 ```bash
-ln -s "$(pwd)/skills/skill-forge" ~/.claude/skills/skill-forge
+ln -s "$(pwd)/skills/public/skill-forge" ~/.claude/skills/skill-forge
 ```
 
 Then in any Claude Code session: *"validate my skills"*, *"create a new skill for X"*, *"regenerate the skill dashboard"*.
@@ -47,27 +55,19 @@ Hot-reload loop for developing your **own** MCP server through [Kitsune MCP](htt
 
 Turn a raw, low-quality MCP server into a reliably-usable one through [Kitsune MCP](https://github.com/kaiser-data/kitsune-mcp) — the "improve" companion to kitsune-dev (develop) and kitsune-gateway (mount). The long tail of 130k servers is where tool definitions are worst (missing descriptions, thin schemas with no `required`, name collisions), so an agent handed that surface makes wrong calls. This skill drives Kitsune's **existing** tools — `test` (quality score + diagnosis), `inspect` (live schemas + resource docs), lean `shapeshift` — in a diagnose → improve → apply loop: the agent writes the corrected usage map, then mounts only the good tools (sandboxed for untrusted sources). No `improve()` tool is added to Kitsune — the intelligence lives in the skill so the gateway stays slim. Also covers hardening your **own** server's tool definitions via the kitsune-dev reload loop until `test()` scores "Good".
 
-## tailscale-endpoints
-
-Endpoint catalogue and recipes for calling self-hosted APIs across the tailnet — primarily the [Jetson voice AI box](https://github.com/kaiser-data/jetson-headless-inference) (Ollama LLM, voice pipeline, Piper TTS, control API): MagicDNS addressing, auth, streaming-vs-speaker output, timeout guidance, and the debugging path for unreachable services.
-
-## star-reports
-
-Project skill for [github-stars-analyzer](https://github.com/kaiser-data/github-stars-analyzer)'s report pipeline: deterministic Python generators that turn the starred-repos dataset + similarity graph into curated landscape reports (taxonomy, master comparison, graph analysis, maintenance risk). Includes the **task-ranked report** pattern — 🥇🥈🥉 picks per use-case backed by web-researched benchmark evidence that is baked in as frozen text so generation stays offline and reproducible — plus the pipeline's verification checklist and table-rendering pitfalls.
-
 ## Using these skills from other agents (OpenClaw, etc.)
 
 Every skill here sticks to the **portable core** of the [Agent Skills spec](https://agentskills.io/specification) — no Claude Code-only frontmatter — so any agent that reads `SKILL.md` folders can use them:
 
 ```bash
-# Claude Code (personal skill)
-ln -s "$(pwd)/skills/tailscale-endpoints" ~/.claude/skills/tailscale-endpoints
+# Claude Code
+ln -s "$(pwd)/skills/public/html-email" ~/.claude/skills/html-email
 
 # OpenClaw
-ln -s "$(pwd)/skills/tailscale-endpoints" ~/.openclaw/skills/tailscale-endpoints
+ln -s "$(pwd)/skills/public/html-email" ~/.openclaw/skills/html-email
 
-# Any other Agent Skills-compatible runtime: point it at skills/<name>/,
-# or ship the packaged zip:  python3 skills/skill-forge/scripts/forge.py package skills/<name>
+# Any other Agent Skills-compatible runtime: point it at skills/public/<name>/,
+# or ship the packaged zip:  python3 skills/public/skill-forge/scripts/forge.py package skills/public/<name>
 ```
 
 `forge.py validate` warns on non-portable frontmatter, so portability is enforced, not just intended.

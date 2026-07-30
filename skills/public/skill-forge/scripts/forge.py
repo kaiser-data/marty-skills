@@ -23,6 +23,21 @@ from pathlib import Path
 PERSONAL_SKILLS = Path.home() / ".claude" / "skills"
 PROJECT_ROOT = Path.cwd()
 
+
+def portable_dir(path):
+    """Path with no local identity in it — docs/index.html is published publicly.
+
+    Repo-relative when possible, otherwise home-relative; absolute paths leak the
+    username and the machine's directory layout into the GitHub Pages dashboard.
+    """
+    p = Path(path)
+    for base, prefix in ((PROJECT_ROOT, ""), (Path.home(), "~/")):
+        try:
+            return prefix + str(p.relative_to(base))
+        except ValueError:
+            continue
+    return p.name
+
 NAME_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 # Portable core — the exact whitelist enforced by Anthropic's quick_validate.py
 SPEC_FIELDS = {"name", "description", "license", "allowed-tools", "metadata", "compatibility"}
@@ -57,19 +72,30 @@ PACKAGE_EXCLUDES = {"__pycache__", "node_modules", ".DS_Store", ".git"}
 
 def find_skill_dirs(include_installed=False):
     """Yield (source, skill_dir). Default scope is THIS repo only — my
-    customized skills. include_installed adds ~/.claude/skills entries that
-    are not symlinks back into the repo, labeled third-party."""
+    customized skills. Skills may sit directly under skills/ or one level
+    deeper in a category folder (skills/personal/, skills/public/).
+    include_installed adds ~/.claude/skills entries that are not symlinks
+    back into the repo, labeled third-party."""
     seen = set()
     out = []
     for candidate in (PROJECT_ROOT / "skills", PROJECT_ROOT / ".claude" / "skills"):
         if not candidate.is_dir():
             continue
         for entry in sorted(candidate.iterdir()):
-            if entry.is_dir() and (entry / "SKILL.md").is_file():
-                real = entry.resolve()
+            if not entry.is_dir():
+                continue
+            if (entry / "SKILL.md").is_file():
+                skill_dirs = [entry]
+            else:  # category folder, e.g. skills/personal/, skills/public/
+                skill_dirs = sorted(
+                    child for child in entry.iterdir()
+                    if child.is_dir() and (child / "SKILL.md").is_file()
+                )
+            for skill_dir in skill_dirs:
+                real = skill_dir.resolve()
                 if real not in seen:
                     seen.add(real)
-                    out.append(("mine", entry))
+                    out.append(("mine", skill_dir))
     if include_installed and PERSONAL_SKILLS.is_dir():
         for entry in sorted(PERSONAL_SKILLS.iterdir()):
             if entry.is_dir() and (entry / "SKILL.md").is_file():
@@ -320,7 +346,7 @@ def cmd_new(args):
         sys.exit(f"error: '{name}' — skill names must be lowercase letters/digits/hyphens")
     if len(name) > MAX_NAME:
         sys.exit(f"error: name exceeds {MAX_NAME} chars")
-    base = Path(args.dir) if args.dir else (PROJECT_ROOT / "skills")
+    base = Path(args.dir) if args.dir else (PROJECT_ROOT / "skills" / "public")
     skill_dir = base / name
     if skill_dir.exists():
         sys.exit(f"error: {skill_dir} already exists")
@@ -456,7 +482,7 @@ def render_dashboard(reports, template_path):
             "age_days": r.get("age_days"),
             "freshness": r.get("freshness", "unknown"),
             "updated": r.get("updated", ""),
-            "dir": r["dir"],
+            "dir": portable_dir(r["dir"]),
         }
         for r in reports
     ], indent=None)
@@ -474,7 +500,7 @@ def main():
 
     p = sub.add_parser("new", help="scaffold a new skill")
     p.add_argument("name")
-    p.add_argument("--dir", help="parent directory (default ./skills)")
+    p.add_argument("--dir", help="parent directory (default ./skills/public; use skills/personal for infra-specific skills)")
     p.add_argument("--description")
     p.set_defaults(fn=cmd_new)
 
