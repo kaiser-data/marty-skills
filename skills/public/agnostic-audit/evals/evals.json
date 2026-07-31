@@ -1,0 +1,44 @@
+{
+  "queries": [
+    {
+      "query": "this importer works on my sample CSV but breaks on the one the client sent",
+      "should_trigger": true
+    },
+    {
+      "query": "check whether this parser is actually generic before we point it at the second feed",
+      "should_trigger": true
+    },
+    {
+      "query": "the script has hardcoded column names and an absolute path to my home directory",
+      "should_trigger": true
+    },
+    {
+      "query": "audit this prompt, I think the few-shot examples are all from one document",
+      "should_trigger": true
+    },
+    {
+      "query": "we are handing this scraper over, is it welded to the site it was built against",
+      "should_trigger": true
+    },
+    {
+      "query": "tests all pass but every fixture is the sample file I developed with",
+      "should_trigger": true
+    },
+    {
+      "query": "is there a mock left anywhere in this demo before I show it",
+      "should_trigger": false
+    },
+    {
+      "query": "the offline mode returns fake data that looks real",
+      "should_trigger": false
+    },
+    {
+      "query": "I only have one sample file, how do I get more before I start building",
+      "should_trigger": false
+    },
+    {
+      "query": "write a CSV parser for this file",
+      "should_trigger": false
+    }
+  ]
+}
