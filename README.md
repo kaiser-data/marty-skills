@@ -6,7 +6,7 @@
 
 ## Layout: public here, personal elsewhere
 
-Everything in this repo lives under **`skills/public/`** — skills that are useful to anyone and contain nothing about my setup: `skill-forge`, `kitsune-gateway`, `kitsune-dev`, `kitsune-improve`, `html-email`, `email-deliverability`, `mock-purge`.
+Everything in this repo lives under **`skills/public/`** — skills that are useful to anyone and contain nothing about my setup: `skill-forge`, `kitsune-gateway`, `kitsune-dev`, `kitsune-improve`, `html-email`, `email-deliverability`, `mock-purge`, `agnostic-audit`, `variance-first`.
 
 Skills bound to my own infrastructure (`jetson-bench-remote`, `tailscale-endpoints`, `star-reports`) live in a **separate private repo** — they carry real hostnames, tailnet names, IPs and usernames, which have no business being in a public repo.
 
