@@ -1,0 +1,48 @@
+{
+  "queries": [
+    {
+      "query": "I have one sample export from the client, let's build the importer for it",
+      "should_trigger": true
+    },
+    {
+      "query": "how do I make sure this parser will handle other providers before I design it",
+      "should_trigger": true
+    },
+    {
+      "query": "planning a scraper for this page, what should I check about the format first",
+      "should_trigger": true
+    },
+    {
+      "query": "I only have one example document, should I generate synthetic ones to test with",
+      "should_trigger": true
+    },
+    {
+      "query": "writing a prompt to extract fields from these invoices, I have one invoice to look at",
+      "should_trigger": true
+    },
+    {
+      "query": "the format looks standard so I'll just code against this file",
+      "should_trigger": true
+    },
+    {
+      "query": "write a CSV parser for this file",
+      "should_trigger": true
+    },
+    {
+      "query": "audit this finished importer for hardcoded assumptions",
+      "should_trigger": false
+    },
+    {
+      "query": "the parser breaks on the second feed, find out why",
+      "should_trigger": false
+    },
+    {
+      "query": "check if any mocks are left in this prototype",
+      "should_trigger": false
+    },
+    {
+      "query": "rename the columns in this dataframe",
+      "should_trigger": false
+    }
+  ]
+}
