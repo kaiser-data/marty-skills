@@ -1,0 +1,62 @@
+tool	layer	lang	licence	stars	maint	health	push_days	bus
+excalidraw/excalidraw	Diagrams & AI charts	TypeScript	MIT	129346	Active	60	0	1
+d3/d3	Low-level / high-performance	Shell	ISC	113436	Stable	40	75	1
+grafana/grafana	BI & dashboard platform	TypeScript	AGPL-3.0	76153	Active	99	4	12
+apache/superset	BI & dashboard platform	Python	Apache-2.0	74220	Active	85	0	2
+chartjs/Chart.js	Web charting library	JavaScript	MIT	67634	Stable	41	76	1
+apache/echarts	Web charting library	TypeScript	Apache-2.0	67048	Active	65	7	2
+jgraph/drawio-desktop	Diagrams & AI charts	JavaScript	Apache-2.0	62495	Active	78	4	1
+metabase/metabase	BI & dashboard platform	Clojure	NOASSERTION	48666	Active	99	0	8
+streamlit/streamlit	Data-app framework	Python	Apache-2.0	45512	Active	83	4	2
+gradio-app/gradio	Data-app framework	Python	Apache-2.0	43311	Active	84	4	2
+ToolJet/ToolJet	BI & dashboard platform	JavaScript	AGPL-3.0	38304	Active	94	4	4
+reflex-dev/reflex	Data-app framework	Python	Apache-2.0	28791	Active	94	4	4
+getredash/redash	BI & dashboard platform	Python	BSD-2-Clause	28739	Slowing	63	1	3
+recharts/recharts	React charting library	TypeScript	MIT	27490	Active	84	1	2
+plotly/dash	Data-app framework	Python	MIT	24373	Active	78	0	1
+matplotlib/matplotlib	Python plotting	Python	none	23073	Stable	89	1	3
+elastic/kibana	BI & dashboard platform	TypeScript	NOASSERTION	21230	Active	98	4	18
+airbnb/visx	React charting library	TypeScript	MIT	21000	Active	55	50	1
+openobserve/openobserve	BI & dashboard platform	TypeScript	AGPL-3.0	20592	Active	98	4	5
+bokeh/bokeh	Python plotting	TypeScript	BSD-3-Clause	20428	Active	73	0	3
+Avaiga/taipy	Data-app framework	Python	Apache-2.0	19397	Slowing	53	6	0
+plotly/plotly.py	Python plotting	Python	MIT	18731	Active	81	4	2
+plotly/plotly.js	Web charting library	JavaScript	MIT	18282	Active	78	2	1
+Canner/WrenAI	BI & dashboard platform	Python	NOASSERTION	17179	Active	80	4	2
+tradingview/lightweight-charts	Low-level / high-performance	TypeScript	Apache-2.0	16931	Active	62	6	1
+Kanaries/pygwalker	Python plotting	Python	Apache-2.0	15932	Active	65	1	1
+apexcharts/apexcharts.js	Web charting library	JavaScript	NOASSERTION	15123	Active	79	1	1
+frappe/charts	Web charting library	JavaScript	MIT	15088	Stalled	5	405	0
+visgl/deck.gl	Low-level / high-performance	TypeScript	MIT	14364	Active	88	0	3
+plouc/nivo	React charting library	TypeScript	MIT	14082	Active	51	22	1
+antvis/G2	Web charting library	TypeScript	MIT	12581	Active	62	28	1
+highcharts/highcharts	Web charting library	TypeScript	NOASSERTION	12479	Active	70	0	2
+keplergl/kepler.gl	Low-level / high-performance	TypeScript	MIT	11959	Active	82	0	2
+vega/vega	Grammar of graphics	JavaScript	BSD-3-Clause	11953	Active	69	1	1
+perspective-dev/perspective	Low-level / high-performance	Rust	Apache-2.0	11099	Active	76	1	1
+lukilabs/beautiful-mermaid	Diagrams & AI charts	TypeScript	MIT	10809	Slowing	37	97	0
+vega/altair	Grammar of graphics	Python	BSD-3-Clause	10450	Active	71	2	1
+leeoniya/uPlot	Low-level / high-performance	JavaScript	MIT	10400	Stable	29	112	0
+c3js/c3	Web charting library	JavaScript	MIT	9347	Stable	51	6	1
+evidence-dev/evidence	BI & dashboard platform	JavaScript	MIT	6838	Slowing	38	174	0
+ScottPlot/ScottPlot	Native / systems charting	C#	MIT	6696	Active	61	50	1
+holoviz/panel	Python plotting	Python	BSD-3-Clause	5731	Active	80	0	2
+vega/vega-lite	Grammar of graphics	TypeScript	BSD-3-Clause	5444	Active	66	2	1
+observablehq/plot	Web charting library	HTML	ISC	5348	Active	42	29	1
+man-group/dtale	Python plotting	TypeScript	LGPL-2.1	5213	Slowing	43	19	0
+alandefreitas/matplotplusplus	Native / systems charting	C++	MIT	4914	Slowing	24	131	0
+AAChartModel/AAChartKit	Native / systems charting	Objective-C	MIT	4766	Slowing	32	92	0
+has2k1/plotnine	Grammar of graphics	Python	MIT	4753	Active	75	27	1
+tremorlabs/tremor	React charting library	TypeScript	Apache-2.0	3560	Stalled	12	305	0
+gonum/plot	Native / systems charting	Go	BSD-3-Clause	2963	Stable	29	111	0
+holoviz/holoviews	Python plotting	Python	BSD-3-Clause	2901	Active	68	0	1
+rilldata/rill	BI & dashboard platform	Go	Apache-2.0	2803	Active	84	0	2
+core-plot/core-plot	Native / systems charting	Objective-C	BSD-3-Clause	2762	Slowing	31	100	0
+posit-dev/great-tables	Python plotting	Python	MIT	2714	Active	72	6	1
+weaveworks/grafanalib	Dashboards as code	Python	Apache-2.0	1971	Stalled	16	246	0
+JetBrains/lets-plot	Grammar of graphics	Kotlin	MIT	1779	Active	77	40	2
+reflex-dev/xy	Python plotting	Python	Apache-2.0	1610	Active	74	4	1
+K-Phoen/grabana	Dashboards as code	Go	MIT	729	Stalled	6	453	0
+hustcc/mcp-mermaid	Diagrams & AI charts	TypeScript	MIT	621	Slowing	49	88	1
+grafana/grafana-foundation-sdk	Dashboards as code	PHP	Apache-2.0	248	Active	65	4	2
+deliveryhero/grafyaml	Dashboards as code	Python	Apache-2.0	44	Active	47	42	1

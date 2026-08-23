@@ -6,11 +6,75 @@
 
 ## Layout: public here, personal elsewhere
 
-Everything in this repo lives under **`skills/public/`** — skills that are useful to anyone and contain nothing about my setup: `skill-forge`, `kitsune-gateway`, `kitsune-dev`, `kitsune-improve`, `html-email`, `email-deliverability`, `mock-purge`, `agnostic-audit`, `variance-first`.
+Everything in this repo lives under **`skills/public/`** — skills that are useful to anyone and contain nothing about my setup. Skills bound to my own hardware, network, or private repos live in a **separate private repo**: they carry real hostnames, IPs and usernames, or drive tooling nobody else can install, so a sanitized public version would not run anyway.
 
-Skills bound to my own infrastructure (`jetson-bench-remote`, `tailscale-endpoints`, `star-reports`) live in a **separate private repo** — they carry real hostnames, tailnet names, IPs and usernames, which have no business being in a public repo.
+The rule for new skills:
 
-The rule for new skills: if it contains a hostname, an IP, a username, or a path from my setup, it goes to the private repo. Otherwise `forge.py new` scaffolds it into `skills/public/` by default.
+- Contains a hostname, an IP, a username, or a path from my setup → **private repo**.
+- Drives a **private** repo or app of mine → **private repo** (the public version would not run).
+- Everything else → `skills/public/` (where `forge.py new` scaffolds by default).
+
+A skill that only *mentions* a public project of mine (`kitsune-mcp`, `kogitsune`, `claude-A2A-Comm`, `github-stars-analyzer`) stays public — but any setup-specific path in it gets replaced with a placeholder first.
+
+## The skills
+
+### Research & evaluation methodology
+
+Written from a real eval sprint, each with an append-only `FIELD-NOTES.md` that records every firing — the mechanism `skills-that-learn` prescribes.
+
+| Skill | Guards against |
+|---|---|
+| `systematic-study` | Study grids whose columns differ in more than one way; factors with one realized level; missing baselines |
+| `seed-replicates-before-effects` | Effect claims from n=1 cells, with no noise floor measured |
+| `detection-needs-a-denominator` | Detectors reported without clean negatives, a false-positive rate, or an eyeballed threshold |
+| `harness-neutrality-check` | Reading a null result as "the model doesn't do it" when it is the harness, template, or sampling settings |
+| `leading-premise-controls` | Probes that presuppose what they measure; treating fluent self-report as evidence |
+| `pairwise-comparison-design` | Forced-choice instruments that cannot measure their own construct; scores compared across separate fits |
+| `numbers-from-primary-sources` | A number entering a write-up from an abstract, a summary, or last session's notes |
+| `citing-what-you-used` | Methods, instruments, and figures whose provenance a reader cannot trace |
+| `modal-gpu-sweeps` | Rented-GPU sweeps that die on a typo after paying for warm-up, or cannot resume |
+| `skills-that-learn` | Skills that never improve because their firings are never logged |
+
+### Writing, publishing & compliance
+
+| Skill | What it does |
+|---|---|
+| `front-loading-findings` | Cuts a long document to a hard limit for a reader who stops on page two |
+| `announcing-events` | Event announcement posts — speakers, agenda, venue, registration link |
+| `updating-editorial-plan` | Keeps an editorial calendar honest when slots slip and the backlog grows |
+| `linkedin-unicode-styling` | Unicode bold/headers/small caps for social posts, without breaking @-mentions |
+| `triaging-new-material` | Reading order and context budget when a pile of new source material arrives |
+| `ai-act-transparency` | EU AI Act Art. 50 disclosure audit for anything that speaks, writes, or summarises for a user |
+| `html-email` | Bulletproof HTML email across Outlook/Gmail/Apple Mail |
+| `email-deliverability` | Spam placement, bounces, sender reputation, pre-send checks in any ESP |
+
+### Code & build guardrails
+
+| Skill | What it does |
+|---|---|
+| `mock-purge` | Finds simulated parts before a prototype gets trusted or handed over |
+| `agnostic-audit` | Post-build audit for implementations overfitted to their one example source |
+| `variance-first` | Pre-build gate: name the axes of variance before writing the implementation |
+
+### Harness & tooling
+
+| Skill | What it does |
+|---|---|
+| `skill-forge` | The full skill lifecycle: create → validate → package → dashboard |
+| `kitsune-gateway` | Mount any of 130k+ MCP servers on demand through [Kitsune MCP](https://github.com/kaiser-data/kitsune-mcp) |
+| `kitsune-dev` | Hot-reload loop for developing your own MCP server through Kitsune |
+| `kitsune-improve` | Turn a raw, low-quality MCP server into a reliably-usable one |
+| `kit-selector` | Choose the leanest capable [kogitsune](https://github.com/kaiser-data/kogitsune) kit for a task |
+| `kit-scout` | Refresh the kit catalog when skills, agents, or kits have changed |
+| `kit-builder` | Assemble a selected config into a runnable kit or launch command |
+| `repack` | Reconfigure a running session whose pack no longer fits the work |
+| `a2a-messaging` | Cross-machine, cross-vendor agent messaging via [claude-A2A-Comm](https://github.com/kaiser-data/claude-A2A-Comm) — and proving which hub you are on before calling a peer silent |
+
+### Tool selection
+
+| Skill | What it does |
+|---|---|
+| `choosing-viz-tools` | Picks a charting/dashboard/BI tool from 61 curated options with maintenance signals |
 
 ## skill-forge
 
@@ -43,18 +107,6 @@ ln -s "$(pwd)/skills/public/skill-forge" ~/.claude/skills/skill-forge
 
 Then in any Claude Code session: *"validate my skills"*, *"create a new skill for X"*, *"regenerate the skill dashboard"*.
 
-## kitsune-gateway
-
-How to mount any of 130,000+ MCP servers on demand through [Kitsune MCP](https://github.com/kaiser-data/kitsune-mcp) (own project) instead of keeping heavy servers always-on: the `search → shapeshift → call → shapeshift()` loop, surgical tool mounts, credential handling, and the decision rule for CLI vs on-demand mount vs dedicated always-on session (break-even at Kitsune's ~1.3K-token floor).
-
-## kitsune-dev
-
-Hot-reload loop for developing your **own** MCP server through [Kitsune MCP](https://github.com/kaiser-data/kitsune-mcp) — an MCP REPL. Kitsune stays mounted as the stable gateway while your work-in-progress server runs as a child process underneath; the `release → connect → shapeshift` reload cycles the child so edited tool code and schemas go live in the **same session**, no client restart. Covers the one footgun (the warm pool serves stale code if you re-`connect()` without `release()` first), absolute-path and naming rules, stderr-based crash debugging, and a minimal FastMCP scaffold to start from.
-
-## kitsune-improve
-
-Turn a raw, low-quality MCP server into a reliably-usable one through [Kitsune MCP](https://github.com/kaiser-data/kitsune-mcp) — the "improve" companion to kitsune-dev (develop) and kitsune-gateway (mount). The long tail of 130k servers is where tool definitions are worst (missing descriptions, thin schemas with no `required`, name collisions), so an agent handed that surface makes wrong calls. This skill drives Kitsune's **existing** tools — `test` (quality score + diagnosis), `inspect` (live schemas + resource docs), lean `shapeshift` — in a diagnose → improve → apply loop: the agent writes the corrected usage map, then mounts only the good tools (sandboxed for untrusted sources). No `improve()` tool is added to Kitsune — the intelligence lives in the skill so the gateway stays slim. Also covers hardening your **own** server's tool definitions via the kitsune-dev reload loop until `test()` scores "Good".
-
 ## Using these skills from other agents (OpenClaw, etc.)
 
 Every skill here sticks to the **portable core** of the [Agent Skills spec](https://agentskills.io/specification) — no Claude Code-only frontmatter — so any agent that reads `SKILL.md` folders can use them:
@@ -75,5 +127,7 @@ ln -s "$(pwd)/skills/public/html-email" ~/.openclaw/skills/html-email
 ## Philosophy: skills are living documents
 
 Skills rot — APIs change, descriptions undertrigger, bodies bloat. The dashboard tracks freshness (fresh <30d / aging <90d / stale >90d), and skill-forge's SKILL.md includes a dedicated *"Improving an existing skill"* workflow. Stale skills get an update pass, not a pass.
+
+`skills-that-learn` takes this one step further: each skill in the research family keeps an append-only `FIELD-NOTES.md` logging every time it helped, misfired, failed to trigger, or turned out to be wrong. Revisions come from that log, not from memory.
 
 Built on the [Agent Skills spec](https://agentskills.io/specification), Anthropic's [skill-creator](https://github.com/anthropics/skills), and conventions from skill-lint, cclint, and agent-skills-lint.
