@@ -121,3 +121,36 @@ different units and should not be quoted for each other. Tokens remain unmeasure
 
 Outcome: two new controls written and green (24 tests), one reviewer objection closed
 with a number, one cell's result withdrawn. `HELPED`.
+
+## 2026-08-28 — hoshi, bge-m3 query-prefix experiment — HELPED
+
+Two-arm design (query prefix: documented-none vs the registry's instruction).
+The factor inventory did real work twice:
+
+1. Writing the Fixed rows surfaced that the *document* prefix was `""` in both
+   arms, so document vectors could be embedded **once and shared**. Turned a
+   claimed ~20 min / two-Jetson-pass experiment into ~10 min and made the arms
+   differ by construction rather than by assumption.
+2. "Fixed means rendered, not intended" — printing one verbatim query per arm
+   was what made the contrast auditable.
+
+Result: R@1 4.5%→11.0%, MRR 0.104→0.191, paired bootstrap 100%. The instructed
+arm reproduced a prior run exactly, which is what licensed reading it as
+single-factor rather than drift. The skill's "one realized level" warning also
+caught a would-be metric switch (MRR declared pre-run; R@1 looked better
+post-hoc) and it got flagged as metric-shopping in the write-up instead.
+
+Nothing in the skill misfired. The one thing I wanted and did not find: explicit
+guidance on *when a shared upstream stage is legitimate* vs. when it hides a
+confound — that is the move that halved the cost here.
+- 2026-09-24 HELPED — Jev vs sprint 48-row battery plan: factor inventory surfaced one-level question wording, jev-latest drift and prompt-contract mismatch as named limitations; dry-run render check added to runner.
+
+- 2026-09-26 HELPED — jev-studies D1–D3 protocols: printing renders plus a code oracle for the rule showed the fake manifest reused from frozen B1 did not flip the label on 16/96 rows (package_registry_hosts untouched).
+
+## 2026-09-28 — jev-studies Test G design (free-tier routes) — HELPED
+Writing the inventory forced the admission that "route" is a composite factor (provider + quantization + template +
+hidden system prompt + filters) that the design cannot split; the licensed sentence became "route X disagrees with
+route Y", not "quantization causes it". Free-tier daily caps (50–1,500 RPD) shrank the battery to T1×2 per route,
+chosen by the cap rather than by taste — worth recording as a design constraint, not a limitation found later.
+
+- 2026-10-01 · HELPED · Test K design (Kitsune guard end-to-end replay, jev-studies). The factor inventory surfaced two items that would otherwise have gone uncontrolled. Anonymized placeholders (`<internal-svc>`, `"<blob>"`) are unparseable by the deterministic stage, so rendering them as-is measures the anonymization. Made it a declared 2-level factor with a map written blind. The guard's score cache would make repeat 2 replay repeat 1. The "fixed filter is not a fixed sample" rule mapped directly onto the stage-1 gate: per-cell retention, and a stage-1 dry run before freezing so the stage-2 sample is declared, not discovered.
