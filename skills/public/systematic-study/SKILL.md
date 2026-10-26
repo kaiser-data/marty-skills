@@ -87,10 +87,12 @@ enter the expensive arms (by a rule such as "first three to finish", not by look
 stopping time, and the inclusion rule. Implement the inclusion rule as **one function**
 that the report, the figures and any public export all call.
 
-A run that times out or returns nothing is data about the endpoint, not the subject, and
-repeated failures are not random: include a unit only below a stated missing share, and
-list every excluded one with that share. Never average units whose matched pair is
-incomplete.
+A run that times out or returns nothing may reflect the endpoint or the subject (reasoning
+length and parse failures can be model-dependent), and repeated failures are not random:
+include a unit only below a stated missing share, computed against the planned count from
+the configuration, and list every excluded one with that share. Never average units whose
+matched pair is incomplete. If a rule or the unit set was settled after some results were
+visible, say so in the write-up.
 
 ## Common mistakes
 
