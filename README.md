@@ -34,6 +34,7 @@ Written from a real eval sprint, each with an append-only `FIELD-NOTES.md` that 
 | `citing-what-you-used` | Methods, instruments, and figures whose provenance a reader cannot trace |
 | `modal-gpu-sweeps` | Rented-GPU sweeps that die on a typo after paying for warm-up, or cannot resume |
 | `skills-that-learn` | Skills that never improve because their firings are never logged |
+| `grounded-rag-under-a-scorer` | RAG with cited evidence tuned by intuition instead of by the scorer: chunking, embedder, context size, evidence format |
 
 ### Writing, publishing & compliance
 
