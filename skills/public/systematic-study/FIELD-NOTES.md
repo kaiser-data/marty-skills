@@ -154,3 +154,19 @@ route Y", not "quantization causes it". Free-tier daily caps (50–1,500 RPD) sh
 chosen by the cap rather than by taste — worth recording as a design constraint, not a limitation found later.
 
 - 2026-10-01 · HELPED · Test K design (Kitsune guard end-to-end replay, jev-studies). The factor inventory surfaced two items that would otherwise have gone uncontrolled. Anonymized placeholders (`<internal-svc>`, `"<blob>"`) are unparseable by the deterministic stage, so rendering them as-is measures the anonymization. Made it a declared 2-level factor with a map written blind. The guard's score cache would make repeat 2 replay repeat 1. The "fixed filter is not a fixed sample" rule mapped directly onto the stage-1 gate: per-cell retention, and a stage-1 dry run before freezing so the stage-2 sample is declared, not discovered.
+
+## 2026-10-26 — when-agents-collude, 13-model pricing panel (CN vs US, size ladders) — HELPED
+Panel of open models on one fork audit (reaction to a rival's price cut, rule effect under a price hold).
+What worked, written down *before* results and logged with a timestamp in the study plan: the selection rule
+for the expensive arm ("first three to finish from new families"), the data-freeze time, and the inclusion rule
+(>=12/16 complete histories AND <=10% branches missing, because repeated time-outs are not random). Applied in
+ONE function used by report, figure and site export, so the three could not disagree. Excluded endpoints stayed
+in runs/ and were listed with their missing share.
+What went wrong first: (1) averaging histories with no complete cut/no-op pair produced NaN that looked like
+"no data"; (2) "Qwen overreacts" was written while its CI included the benchmark; (3) "reaction strength predicts
+the rule effect" rested on 2 models and a scripted control contradicted it; (4) DeepSeek Flash vs Pro looked like
+a size ladder but Flash reasons and Pro does not on that endpoint — a composite factor; (5) "developer country"
+is a label bundling family, size, recipe and serving, so the licensed sentence was "in this panel, origin does
+not sort the models", never a cause. An external adversarial review (second model) caught 2-5 before the paper did.
+Third entry in favour of "declare rules before the data can argue" (with 2026-08-28 metric pre-declared and
+2026-10-01 stage-1 sample declared before freezing) -> body edited.

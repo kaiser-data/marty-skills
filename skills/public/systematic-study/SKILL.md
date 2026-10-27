@@ -1,6 +1,6 @@
 ---
 name: systematic-study
-description: Use when designing or reviewing a study that varies parameters to produce an insight - an eval grid, a sweep, an ablation, a prompt-condition battery, a scaling ladder, an A/B of model variants. Symptoms - a results table whose columns differ in more than one way, "we changed X and the score moved", a condition set that grew by addition rather than design, a factor with exactly one realized level, a baseline nobody has rendered and read, held-fixed settings that appear in no file, a comparison pooled across families or harnesses, an insight that would not survive being asked "compared to what, holding what?".
+description: Use when designing or reviewing a study that varies parameters to produce an insight - an eval grid, a sweep, an ablation, a prompt-condition battery, a scaling ladder, an A/B of model variants, a panel comparing models by family, size or developer country. Symptoms - a results table whose columns differ in more than one way, "we changed X and the score moved", a condition set that grew by addition rather than design, a factor with exactly one realized level, a baseline nobody has rendered and read, held-fixed settings that appear in no file, a comparison pooled across families or harnesses, endpoints that time out or return nothing mid-run, deciding which models to include after seeing some results, an insight that would not survive being asked "compared to what, holding what?".
 ---
 
 # Systematic Study
@@ -62,7 +62,9 @@ than a fifth size in the first. **REQUIRED:** pair with **seed-replicates-before
 Write the sentence out: *within one family, holding harness/battery/sampling fixed, size
 varies over four levels.* That sentence is also the limitation section. If it says
 "within one family", no pooled cross-family claim is available, and a pooled correlation
-that appears anyway is a weaker result wearing the same name.
+that appears anyway is a weaker result wearing the same name. A label such as developer
+country, provider route or "Flash vs Pro" bundles many factors: it licenses "these groups
+differ (or not) in this panel", never "the label causes it".
 
 ## A fixed filter is not a fixed sample
 
@@ -78,15 +80,28 @@ Ask which way the attrition points. A gate that drops the hard cases from one ar
 flatters the hypothesis that wanted that arm clean — and a bias favouring the conclusion
 is one to bound, not mention.
 
+## Declare the rules before the data can argue
+
+Before any result exists, write down with a timestamp: the primary metric, which units
+enter the expensive arms (by a rule such as "first three to finish", not by looking), the
+stopping time, and the inclusion rule. Implement the inclusion rule as **one function**
+that the report, the figures and any public export all call.
+
+A run that times out or returns nothing may reflect the endpoint or the subject (reasoning
+length and parse failures can be model-dependent), and repeated failures are not random:
+include a unit only below a stated missing share, computed against the planned count from
+the configuration, and list every excluded one with that share. Never average units whose
+matched pair is incomplete. If a rule or the unit set was settled after some results were
+visible, say so in the write-up.
+
 ## Common mistakes
 
 | Mistake | Consequence |
 |---|---|
 | Conditions added as they occurred to someone | Unbalanced grid; effects not separable |
-| "Held fixed" verified in code, not in rendering | The template varies it per model, silently |
 | Treatment differs in the intended way plus one more | Composite factor sold as a clean one |
 | Pooling across families/harnesses to raise n | n rises, the licensed comparison does not |
-| A gate whose per-cell drop rate was never printed | Cells scored on different samples |
+| Inclusion or arm selection decided after a look | The panel is chosen by the result it reports |
 
 ## Red flags
 
@@ -96,6 +111,7 @@ is one to bound, not mention.
 - "We can control for that afterwards."
 - A factor whose level list has length one.
 - A filter everyone agrees is correct, whose retention nobody has looked at per cell.
+- The inclusion rule exists only in your head, or in three slightly different copies.
 
 ---
 
