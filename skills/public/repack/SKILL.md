@@ -116,10 +116,21 @@ restart to apply? [y/N]
 ```
 
 ### 6. On confirm — write the handoff, save, print the command
-Write `.kogitsune/handoff.md` in the working directory: where the work stands, what is
-done, what is next, and any decision the user has already made that the next session must
-not re-litigate. Short and concrete — claude-mem carries the broader history; this covers
-the last mile. Mention adding `.kogitsune/` to that project's `.gitignore` if it is a git
+Write `.kogitsune/handoff.md` in the working directory as a brief for the work still to
+do, **not** a narrative of the session. Compactions that select facts for future work keep
+accuracy; ones that summarise the history lose it (arXiv 2611.05306, App. A). Sections, in order:
+
+1. **Objective:** the user's task, verbatim or near-verbatim, in one line if it fits.
+2. **Established facts:** exact paths, symbols, commands, observed values and errors.
+   Keep observations separate from unverified ideas.
+3. **Applied changes:** each file changed or created, what changed, whether it was verified.
+4. **Verification:** checks run and their outcomes, including failures.
+5. **Dead ends:** approaches that failed and must not be retried.
+6. **Decisions:** what the user already decided, so the next session doesn't reopen it.
+7. **Remaining plan:** subgoals in order, the immediate next command or edit, and the
+   condition for calling the task done.
+
+Short and concrete: claude-mem carries the broader history; this covers the last mile. Mention adding `.kogitsune/` to that project's `.gitignore` if it is a git
 repo that lacks the entry.
 
 ```bash
